@@ -20,6 +20,14 @@ websocket::websocket(const std::string& url) {
     curl_easy_setopt(this->easy, CURLOPT_SSL_VERIFYHOST, 0L);
     curl_easy_setopt(this->easy, CURLOPT_WRITEFUNCTION, onMsg);
     curl_easy_setopt(this->easy, CURLOPT_WRITEDATA, this);
+    // libcurl calls this about once per second even on an idle connection,
+    // so the destructor can abort curl_easy_perform without waiting for the server
+    curl_easy_setopt(this->easy, CURLOPT_NOPROGRESS, 0L);
+    curl_easy_setopt(this->easy, CURLOPT_XFERINFOFUNCTION,
+        +[](void* p, curl_off_t, curl_off_t, curl_off_t, curl_off_t) -> int {
+            return reinterpret_cast<websocket*>(p)->isStop.load() ? 1 : 0;
+        });
+    curl_easy_setopt(this->easy, CURLOPT_XFERINFODATA, this);
 
     hb.setCallback([this]() {
         brls::async([this]() {
@@ -42,25 +50,17 @@ websocket::websocket(const std::string& url) {
 
 websocket::~websocket() {
 #if LIBCURL_VERSION_NUM >= 0x080000 && !defined(__PS4__)
-    // 1) 先置停止标志，让心跳回调与接收循环尽快退出，不再发起新的 easy 操作
+    // 1) 先置停止标志：心跳回调不再发送，进度回调会中止接收线程的 curl_easy_perform
     this->isStop.store(true);
     // 2) 停止心跳定时器
     this->hb.stop();
-    // 3) 发送关闭帧唤醒接收线程的 curl_easy_perform（send 在锁内，避免与心跳并发）
-    {
-        std::lock_guard<std::mutex> lock(this->easyMutex);
-        if (this->easy != nullptr) {
-            size_t sent;
-            curl_ws_send(this->easy, "", 0, &sent, 0, CURLWS_CLOSE);
-        }
-    }
-    // 4) 等待接收线程结束，此后不再有人使用 easy
+    // 3) 等待接收线程结束，此后不再有人使用 easy
 #ifdef BOREALIS_USE_STD_THREAD
     this->th->join();
 #else
     pthread_join(this->th, nullptr);
 #endif
-    // 5) 最后清理
+    // 4) 最后清理
     {
         std::lock_guard<std::mutex> lock(this->easyMutex);
         if (this->easy != nullptr) {
@@ -79,8 +79,9 @@ void* websocket::wsRecv(void* ptr) {
         if (res == CURLE_OK) break;
         p->hb.stop();
         brls::Logger::warning("ws perform failed: {}", curl_easy_strerror(res));
+        // 分段睡眠，退出时不必等完整个退避周期（最长 60s）
+        for (uint64_t slept = 0; slept < t && !p->isStop.load(); slept += 100) retro_sleep(100);
         if (p->isStop.load()) break;
-        retro_sleep(t);
     }
     brls::Logger::info("ws recv exit");
     return nullptr;
