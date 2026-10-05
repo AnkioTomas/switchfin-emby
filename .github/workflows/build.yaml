@@ -72,6 +72,9 @@ jobs:
         for p in Switchfin-emby-windows-*; do
           [[ -d $p ]] && 7z a -tzip -mx9 $p.zip ./$p/* && rm -rf $p
         done
+        for f in Switchfin-emby-Vita-*/Switchfin.vpk; do mv "$f" "${f%/*}/Switchfin-emby.vpk"; done
+        for f in Switchfin-emby-PS4-*/*.pkg; do mv "$f" "${f%/*}/Switchfin-emby-PS4.pkg"; done
+        for f in Switchfin-emby-Archlinux-*/switchfin-*.pkg.tar.*; do mv "$f" "${f%/*}/switchfin-emby-${f##*/switchfin-}"; done
         tree
     - name: Release and Upload Assets
       uses: softprops/action-gh-release@v3
