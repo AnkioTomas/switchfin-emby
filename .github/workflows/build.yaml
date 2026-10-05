@@ -276,7 +276,8 @@ jobs:
         apt-get update
         apt-get install -y --no-install-recommends debhelper cmake build-essential \
           ninja-build git wget ca-certificates xorg-dev libdbus-1-dev libssl-dev \
-          libwayland-dev libxkbcommon-dev libwebp-dev libmpv-dev libmupdf-dev
+          libwayland-dev libxkbcommon-dev libwebp-dev libmpv-dev libmupdf-dev \
+          libopenjp2-7-dev libjbig2dec0-dev libgumbo-dev
     - uses: actions/checkout@v7
       with:
         submodules: recursive
