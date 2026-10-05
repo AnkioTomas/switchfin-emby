@@ -114,6 +114,22 @@ jobs:
           dkp-pacman --noconfirm -U $BASE_URL/switch-${pkg}-any.pkg.tar.zst
         done
         git config --system --add safe.directory $GITHUB_WORKSPACE
+    - name: Cache ffmpeg
+      id: cache-ffmpeg
+      uses: actions/cache@v5
+      with:
+        path: ffmpeg-pkg
+        key: switch-ffmpeg-${{ hashFiles('scripts/switch/ffmpeg/**') }}
+    - name: Build ffmpeg
+      if: steps.cache-ffmpeg.outputs.cache-hit != 'true'
+      run: |
+        apt-get update -qq && apt-get install -y -qq fakeroot zstd
+        useradd -m builder
+        cp -r scripts/switch/ffmpeg /home/builder/ffmpeg && chown -R builder /home/builder/ffmpeg
+        su builder -c "cd /home/builder/ffmpeg && MAKEFLAGS=-j$(nproc) dkp-makepkg -d --noconfirm"
+        mkdir -p ffmpeg-pkg && cp /home/builder/ffmpeg/switch-ffmpeg-*.pkg.tar.zst ffmpeg-pkg/
+    - name: Install ffmpeg
+      run: dkp-pacman --noconfirm -U ffmpeg-pkg/switch-ffmpeg-*.pkg.tar.zst
     - name: Build libusbhsfs
       run: |
         git clone https://github.com/DarkMatterCore/libusbhsfs.git -b v0.2.10 --depth=1
