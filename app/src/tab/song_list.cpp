@@ -143,7 +143,7 @@ void SongList::doList() {
         [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Track>& r) {
             ASYNC_RELEASE
             this->start = offset + this->pageSize;
-            if (r.TotalRecordCount == 0) {
+            if (offset == 0 && r.TotalRecordCount == 0) {
                 this->list->clearData();
             } else if (offset == 0) {
                 this->list->setDataSource(new SongsDataSource(r.Items));

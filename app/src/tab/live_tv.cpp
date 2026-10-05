@@ -39,7 +39,7 @@ public:
             [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::ProgramInfo>& r) {
                 ASYNC_RELEASE
                 this->start = offset + this->pageSize;
-                if (r.TotalRecordCount == 0) {
+                if (offset == 0 && r.TotalRecordCount == 0) {
                     this->clearData();
                 } else if (offset == 0) {
                     this->setDataSource(new ProgramDataSource(r.Items));

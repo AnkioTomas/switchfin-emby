@@ -266,7 +266,7 @@ void SearchTab::doSearch(const std::string& searchTerm) {
         [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
             ASYNC_RELEASE
             this->searchIndex = offset + this->pageSize;
-            if (r.TotalRecordCount == 0) {
+            if (offset == 0 && r.TotalRecordCount == 0) {
                 this->searchSuggest->setEmpty( "main/search/no_results"_i18n, "icon/ico-search.svg");
             } else if (offset == 0) {
                 this->searchSuggest->setDataSource(new VideoDataSource(r.Items));

@@ -113,7 +113,7 @@ public:
             [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
                 ASYNC_RELEASE
                 this->start = offset + this->pageSize;
-                if (r.TotalRecordCount == 0) {
+                if (offset == 0 && r.TotalRecordCount == 0) {
                     this->clearData();
                 } else if (offset == 0) {
                     this->setDataSource(new VideoDataSource(r.Items, this->itemId));
@@ -333,7 +333,7 @@ void MediaCollection::doRequest() {
         [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
             ASYNC_RELEASE
             this->startIndex = offset + this->pageSize;
-            if (r.TotalRecordCount == 0) {
+            if (offset == 0 && r.TotalRecordCount == 0) {
                 this->recycler->setEmpty();
             } else if (offset == 0) {
                 this->recycler->setDataSource(new VideoDataSource(r.Items));
