@@ -115,9 +115,18 @@ struct Item {
     uint64_t RunTimeTicks = 0;
     UserDataResult UserData;
     std::vector<MediaChapter> Chapters;
+    // Emby music albums have empty ImageTags; their cover belongs to another item
+    std::string PrimaryImageItemId;
+    std::string PrimaryImageTag;
+
+    std::pair<std::string, std::string> primaryImage() const {
+        auto it = ImageTags.find(imageTypePrimary);
+        if (it != ImageTags.end()) return {Id, it->second};
+        return {PrimaryImageItemId, PrimaryImageTag};
+    }
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    Item, Id, Name, Type, ImageTags, ProductionYear, RunTimeTicks, UserData, Chapters);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Item, Id, Name, Type, ImageTags, ProductionYear, RunTimeTicks,
+    UserData, Chapters, PrimaryImageItemId, PrimaryImageTag);
 
 struct Collection : public Item {
     bool IsFolder;
@@ -225,7 +234,8 @@ struct Episode : public Season {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Episode, Id, Name, Type, ImageTags, ProductionYear, UserData, Chapters,
     RunTimeTicks, IndexNumber, ParentIndexNumber, Overview, ParentThumbImageTag, ParentThumbItemId, SeriesId,
-    SeriesName, SeriesPrimaryImageTag, ParentBackdropItemId, ParentBackdropImageTags, MediaSources);
+    SeriesName, SeriesPrimaryImageTag, ParentBackdropItemId, ParentBackdropImageTags, MediaSources,
+    PrimaryImageItemId, PrimaryImageTag);
 
 struct Recommend {
     std::string BaselineItemName;
@@ -241,7 +251,8 @@ struct Album : public Item {
     long RecursiveItemCount = 0;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    Album, Id, Name, Type, ImageTags, ProductionYear, AlbumArtist, RunTimeTicks, RecursiveItemCount);
+    Album, Id, Name, Type, ImageTags, ProductionYear, AlbumArtist, RunTimeTicks, RecursiveItemCount,
+    PrimaryImageItemId, PrimaryImageTag);
 
 struct Track : public Item {
     long IndexNumber = 0;
@@ -252,9 +263,16 @@ struct Track : public Item {
     std::string AlbumPrimaryImageTag;
     std::vector<std::string> Artists;
     std::string SeriesName;
+
+    std::pair<std::string, std::string> primaryImage() const {
+        auto img = Item::primaryImage();
+        if (img.second.empty()) return {AlbumId, AlbumPrimaryImageTag};
+        return img;
+    }
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Track, Id, Name, Type, IndexNumber, ParentIndexNumber, RunTimeTicks,
-    ProductionYear, Chapters, CommunityRating, SeriesName, Album, AlbumId, AlbumPrimaryImageTag, Artists, UserData);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Track, Id, Name, Type, ImageTags, IndexNumber, ParentIndexNumber,
+    RunTimeTicks, ProductionYear, Chapters, CommunityRating, SeriesName, Album, AlbumId, AlbumPrimaryImageTag, Artists,
+    UserData);
 
 struct Program {
     std::string Name;

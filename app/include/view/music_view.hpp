@@ -40,10 +40,8 @@ public:
         std::string ImageId;
         std::string ImageTag;
 
-        Track(jellyfin::Track* item) : Id(item->Id), Title(item->Name) {
-            this->Album = item->Album;
-            this->ImageId = item->AlbumId;
-            this->ImageTag = item->AlbumPrimaryImageTag;
+        Track(jellyfin::Track* item) : Id(item->Id), Title(item->Name), Album(item->Album) {
+            std::tie(this->ImageId, this->ImageTag) = item->primaryImage();
         }
     };
 

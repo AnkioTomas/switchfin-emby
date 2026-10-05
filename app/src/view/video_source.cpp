@@ -201,10 +201,10 @@ RecyclingGridItem* VideoDataSource::cellForRow(RecyclingView* recycler, size_t i
             cell->labelExt->setText(std::to_string(item.ProductionYear));
         }
 
-        auto it = item.ImageTags.find(jellyfin::imageTypePrimary);
-        if (it != item.ImageTags.end()) {
-            Image::load(cell->picture, jellyfin::apiPrimaryImage, item.Id,
-                HTTP::encode_form({{"tag", it->second}, {"maxWidth", "325"}}));
+        auto [imageId, imageTag] = item.primaryImage();
+        if (!imageTag.empty()) {
+            Image::load(cell->picture, jellyfin::apiPrimaryImage, imageId,
+                HTTP::encode_form({{"tag", imageTag}, {"maxWidth", "325"}}));
         }
     }
 

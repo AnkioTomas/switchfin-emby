@@ -95,11 +95,11 @@ MusicAlbum::MusicAlbum(const jellyfin::Item& item) : itemId(item.Id) {
     this->albumTitle->setText(item.Name);
     if (item.ProductionYear) this->albumYear->setText(std::to_string(item.ProductionYear));
     // loading cover
-    auto it = item.ImageTags.find(jellyfin::imageTypePrimary);
-    if (it != item.ImageTags.end()) {
-        Image::load(this->imageCover, jellyfin::apiPrimaryImage, itemId,
+    auto [imageId, imageTag] = item.primaryImage();
+    if (!imageTag.empty()) {
+        Image::load(this->imageCover, jellyfin::apiPrimaryImage, imageId,
             HTTP::encode_form({
-                {"tag", it->second},
+                {"tag", imageTag},
                 {"maxWidth", "240"},
             }));
         this->imageCover->setVisibility(brls::Visibility::VISIBLE);
@@ -149,11 +149,11 @@ void MusicAlbum::doAlbum() {
             ASYNC_RELEASE
             this->albumAritst->setText(r.AlbumArtist);
 
-            auto logo = r.ImageTags.find(jellyfin::imageTypePrimary);
-            if (logo != r.ImageTags.end()) {
-                Image::load(this->imageCover, jellyfin::apiPrimaryImage, r.Id,
+            auto [imageId, imageTag] = r.primaryImage();
+            if (!imageTag.empty()) {
+                Image::load(this->imageCover, jellyfin::apiPrimaryImage, imageId,
                     HTTP::encode_form({
-                        {"tag", logo->second},
+                        {"tag", imageTag},
                         {"maxWidth", "240"},
                     }));
             }

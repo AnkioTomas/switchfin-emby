@@ -54,20 +54,15 @@ public:
             cell->name->setText(item.Name);
         }
 
-        if (item.Type == jellyfin::mediaTypeAudio) {
-            if (!item.AlbumPrimaryImageTag.empty()) {
-                Image::load(cell->picture, jellyfin::apiPrimaryImage, item.AlbumId,
-                    HTTP::encode_form({{"tag", item.AlbumPrimaryImageTag}, {"maxWidth", "50"}}));
-            }
+        auto [imageId, imageTag] = item.primaryImage();
+        if (!imageTag.empty()) {
+            Image::load(cell->picture, jellyfin::apiPrimaryImage, imageId,
+                HTTP::encode_form({{"tag", imageTag}, {"maxWidth", "50"}}));
+        }
 
+        if (item.Type == jellyfin::mediaTypeAudio) {
             cell->misc->setText(fmt::format("{}", fmt::join(item.Artists, " ")));
         } else {
-            auto it = item.ImageTags.find(jellyfin::imageTypePrimary);
-            if (it != item.ImageTags.end()) {
-                Image::load(cell->picture, jellyfin::apiPrimaryImage, item.Id,
-                    HTTP::encode_form({{"tag", it->second}, {"maxWidth", "50"}}));
-            }
-
             if (item.CommunityRating > 0) {
                 cell->rating->setText(fmt::format("{:.1f}", item.CommunityRating));
                 cell->rating->getParent()->setVisibility(brls::Visibility::VISIBLE);
