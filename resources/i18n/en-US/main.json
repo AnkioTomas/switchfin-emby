@@ -14,7 +14,11 @@
   "home": {
     "resume": "Continue Watching",
     "nextup": "Next Up",
-    "latest": "Recently Added"
+    "latest": "Recently Added",
+    "movie_releases": "Recently Released Movies",
+    "collections": "Collections",
+    "playlists": "Playlists",
+    "onnow": "On Now"
   },
   "recommend": {
     "like": "Because you like {}",

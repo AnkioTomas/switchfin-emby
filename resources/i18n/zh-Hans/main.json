@@ -14,7 +14,11 @@
   "home": {
     "resume": "继续观看",
     "nextup": "接下来",
-    "latest": "最近新增"
+    "latest": "最近新增",
+    "movie_releases": "最近上映的电影",
+    "collections": "合集",
+    "playlists": "播放列表",
+    "onnow": "正在直播"
   },
   "recommend": {
     "like": "因为你喜欢 {}",

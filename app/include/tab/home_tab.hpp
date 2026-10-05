@@ -9,6 +9,10 @@
 
 class RecylingVideo;
 
+namespace jellyfin {
+struct Collection;
+}
+
 class HomeTab : public AttachedView, public Presenter {
 public:
     HomeTab();
@@ -22,8 +26,11 @@ public:
 
 private:
     BRLS_BIND(brls::Box, boxHome, "home/box");
-    BRLS_BIND(RecylingVideo, userResume, "home/user/resume");
-    BRLS_BIND(RecylingVideo, showNextup, "home/show/nextup");
 
-    std::vector<RecylingVideo*> latest;
+    std::vector<std::function<void(bool)>> sections;
+
+    void doSections(const std::vector<std::string>& types);
+    void addSection(const std::string& type, const std::vector<jellyfin::Collection>& views);
+    RecylingVideo* addRow(const std::string& title, float width, float height);
+    void addPaged(const std::string& title, float width, float height, std::function<std::string(size_t, size_t)> query);
 };
