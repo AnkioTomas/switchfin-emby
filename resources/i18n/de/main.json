@@ -14,7 +14,11 @@
   "home": {
     "resume": "Weiterschauen",
     "nextup": "Als Nächstes",
-    "latest": "Neustes Hinzugefügt"
+    "latest": "Neustes Hinzugefügt",
+    "movie_releases": "Kürzlich erschienene Filme",
+    "collections": "Sammlungen",
+    "playlists": "Wiedergabelisten",
+    "onnow": "Läuft gerade"
   },
   "recommend": {
     "like": "Weil du {} magst",
@@ -53,7 +57,9 @@
     "next": "Nächstes",
     "error": "Wiedergabefehler",
     "episode": "Episoden",
-    "speed_up": "Aktuelle Geschwindigkeit {}"
+    "speed_up": "Aktuelle Geschwindigkeit {}",
+    "lyric": "Liedtext",
+    "no_lyric": "Kein Liedtext"
   },
   "ebook": {
     "zoom": "Zoom",

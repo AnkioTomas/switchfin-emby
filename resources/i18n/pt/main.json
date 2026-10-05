@@ -14,7 +14,11 @@
   "home": {
     "resume": "Continuar a ver",
     "nextup": "Próximo",
-    "latest": "Mais recentes adicionadas"
+    "latest": "Mais recentes adicionadas",
+    "movie_releases": "Filmes lançados recentemente",
+    "collections": "Coleções",
+    "playlists": "Listas de reprodução",
+    "onnow": "Em direto"
   },
   "recommend": {
     "like": "Recomendações",
@@ -53,7 +57,9 @@
     "next": "Próximo",
     "error": "Falha na reprodução",
     "episode": "Episódio",
-    "speed_up": "Velocidade atual {}"
+    "speed_up": "Velocidade atual {}",
+    "lyric": "Letra",
+    "no_lyric": "Sem letra"
   },
   "ebook": {
     "zoom": "Zoom",

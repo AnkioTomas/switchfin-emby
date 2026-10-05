@@ -14,7 +14,11 @@
   "home": {
     "resume": "Lecture",
     "nextup": "Suivant",
-    "latest": "Ajoutés récemment"
+    "latest": "Ajoutés récemment",
+    "movie_releases": "Films sortis récemment",
+    "collections": "Collections",
+    "playlists": "Listes de lecture",
+    "onnow": "En direct"
   },
   "recommend": {
     "like": "Parce que vous aimez {}",
@@ -53,7 +57,9 @@
     "next": "Suivant",
     "error": "Échec de lecture",
     "episode": "Sélections",
-    "speed_up": "Lecture en vitesse accélérée"
+    "speed_up": "Lecture en vitesse accélérée",
+    "lyric": "Paroles",
+    "no_lyric": "Pas de paroles"
   },
   "ebook": {
     "zoom": "Zoom",

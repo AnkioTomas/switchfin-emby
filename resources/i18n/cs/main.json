@@ -14,7 +14,11 @@
   "home": {
     "resume": "Pokračovat ve sledování",
     "nextup": "Další",
-    "latest": "Nedávno přidané"
+    "latest": "Nedávno přidané",
+    "movie_releases": "Nedávno vydané filmy",
+    "collections": "Kolekce",
+    "playlists": "Seznamy skladeb",
+    "onnow": "Právě vysíláno"
   },
   "recommend": {
     "like": "Protože se vám líbí {}",
@@ -53,7 +57,9 @@
     "next": "Další",
     "error": "Chyba přehrávání",
     "episode": "Epizoda",
-    "speed_up": "Aktuální rychlost {}"
+    "speed_up": "Aktuální rychlost {}",
+    "lyric": "Text písně",
+    "no_lyric": "Žádný text písně"
   },
   "ebook": {
     "zoom": "Přiblížení",

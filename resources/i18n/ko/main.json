@@ -14,7 +14,11 @@
   "home": {
     "resume": "계속 시청하기",
     "nextup": "다음",
-    "latest": "최근 추가"
+    "latest": "최근 추가",
+    "movie_releases": "최근 개봉 영화",
+    "collections": "컬렉션",
+    "playlists": "재생목록",
+    "onnow": "방송 중"
   },
   "recommend": {
     "like": "{} 을(를) 좋아하기 때문에",
@@ -53,7 +57,9 @@
     "next": "다음",
     "error": "재생 실패",
     "episode": "에피소드",
-    "speed_up": "{} 배속 재생 중"
+    "speed_up": "{} 배속 재생 중",
+    "lyric": "가사",
+    "no_lyric": "가사 없음"
   },
   "ebook": {
     "zoom": "확대/축소",

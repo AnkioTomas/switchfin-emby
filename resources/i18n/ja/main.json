@@ -14,7 +14,11 @@
   "home": {
     "resume": "視聴を続ける",
     "nextup": "次のページへ",
-    "latest": "最近追加されたもの"
+    "latest": "最近追加されたもの",
+    "movie_releases": "最近公開された映画",
+    "collections": "コレクション",
+    "playlists": "プレイリスト",
+    "onnow": "放送中"
   },
   "recommend": {
     "like": "{} がお気に入りのため",
@@ -53,7 +57,9 @@
     "next": "次へ",
     "error": "再生エラー",
     "episode": "エピソード",
-    "speed_up": "現在の速度 {}"
+    "speed_up": "現在の速度 {}",
+    "lyric": "歌詞",
+    "no_lyric": "歌詞がありません"
   },
   "ebook": {
     "zoom": "ズーム",

@@ -14,7 +14,11 @@
   "home": {
     "resume": "İzlemeye Devam Et",
     "nextup": "Sıradaki",
-    "latest": "Yakın Zamanda Eklenen"
+    "latest": "Yakın Zamanda Eklenen",
+    "movie_releases": "Yakın Zamanda Çıkan Filmler",
+    "collections": "Koleksiyonlar",
+    "playlists": "Çalma Listeleri",
+    "onnow": "Şu An Yayında"
   },
   "recommend": {
     "like": "{} sevdiğiniz için",
@@ -53,7 +57,9 @@
     "next": "Sonraki",
     "error": "Oynatma hatası",
     "episode": "Bölümler",
-    "speed_up": "Mevcut hız {}"
+    "speed_up": "Mevcut hız {}",
+    "lyric": "Şarkı Sözleri",
+    "no_lyric": "Şarkı sözü yok"
   },
   "ebook": {
     "zoom": "Yakınlaştırma",

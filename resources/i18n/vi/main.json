@@ -14,7 +14,11 @@
   "home": {
     "resume": "Tiêp tục xem",
     "nextup": "Kế tiếp",
-    "latest": "Vừa thêm"
+    "latest": "Vừa thêm",
+    "movie_releases": "Phim mới phát hành",
+    "collections": "Bộ sưu tập",
+    "playlists": "Danh sách phát",
+    "onnow": "Đang phát sóng"
   },
   "recommend": {
     "like": "Vì bạn thích {}",
@@ -53,7 +57,9 @@
     "next": "Sau",
     "error": "Lỗi trong khi phát",
     "episode": "Tập",
-    "speed_up": "Tốc độ hệ tại {}"
+    "speed_up": "Tốc độ hệ tại {}",
+    "lyric": "Lời bài hát",
+    "no_lyric": "Không có lời bài hát"
   },
   "ebook": {
     "zoom": "Thu phóng",

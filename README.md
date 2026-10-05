@@ -6,8 +6,8 @@ A third-party player for **Emby** that provides a native, gamepad-friendly user 
 It is a fork of [Switchfin](https://github.com/dragonflylee/switchfin) (a Jellyfin client), ported to talk to Emby Server only.
 <br>
 
-[![build](https://github.com/AnkioTomas/switch-emby/actions/workflows/build.yaml/badge.svg)](https://github.com/AnkioTomas/switch-emby/actions/workflows/build.yaml)
-[![download](https://img.shields.io/github/downloads/AnkioTomas/switch-emby/total?label=Downloads)](https://github.com/AnkioTomas/switch-emby/releases/latest)
+[![build](https://github.com/AnkioTomas/switchfin-emby/actions/workflows/build.yaml/badge.svg)](https://github.com/AnkioTomas/switchfin-emby/actions/workflows/build.yaml)
+[![download](https://img.shields.io/github/downloads/AnkioTomas/switchfin-emby/total?label=Downloads)](https://github.com/AnkioTomas/switchfin-emby/releases/latest)
 
 **This project is in its early stages so expect bugs.** Tested against Emby Server 4.9.5.
 
@@ -200,7 +200,7 @@ sudo xattr -rd com.apple.quarantine /Applications/Switchfin.app
 ## Development
 
 ```shell
-git clone https://github.com/AnkioTomas/switch-emby.git --recurse-submodules --shallow-submodules
+git clone https://github.com/AnkioTomas/switchfin-emby.git --recurse-submodules --shallow-submodules
 ```
 
 ### Nintendo Switch

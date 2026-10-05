@@ -17,7 +17,7 @@ public:
     static void checkUpdate(int delay = 2000, bool showUpToDateDialog = false);
 
     inline static std::shared_ptr<std::atomic_bool> updating = std::make_shared<std::atomic_bool>(true);
-    inline static std::string git_repo = "AnkioTomas/switch-emby";
+    inline static std::string git_repo = "AnkioTomas/switchfin-emby";
 };
 
 struct AppUser {
