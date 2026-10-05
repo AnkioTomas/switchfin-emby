@@ -272,14 +272,15 @@ public:
             {"startIndex", std::to_string(this->start)},
         });
 
+        size_t offset = this->start;
         ASYNC_RETAIN
         jellyfin::getJSON<jellyfin::Result<jellyfin::ActivityLog>>(
-            [ASYNC_TOKEN](const jellyfin::Result<jellyfin::ActivityLog>& r) {
+            [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::ActivityLog>& r) {
                 ASYNC_RELEASE
-                this->start = r.StartIndex + this->pageSize;
+                this->start = offset + this->pageSize;
                 if (r.TotalRecordCount == 0) {
                     this->setEmpty();
-                } else if (r.StartIndex == 0) {
+                } else if (offset == 0) {
                     this->setDataSource(new ActivityDataSource(r.Items));
                 } else {
                     auto dataSrc = dynamic_cast<ActivityDataSource*>(this->getDataSource());
@@ -381,7 +382,7 @@ Dashboard::Dashboard() {
         return true;
     });
     this->btnScan->registerClickAction([this](...) {
-        this->doRunTask("RefreshLibrary");
+        this->doScan();
         return true;
     });
 
@@ -409,7 +410,6 @@ Dashboard::Dashboard() {
     this->doSystemInfo();
     this->doActivityWarn();
     this->doSession();
-    this->doListTask();
 }
 
 Dashboard::~Dashboard() { brls::Logger::debug("View Dashboard: delete"); }
@@ -498,24 +498,7 @@ void Dashboard::doRestart() {
         jellyfin::apiRestart);
 }
 
-void Dashboard::doListTask() {
-    ASYNC_RETAIN
-    jellyfin::getJSON<std::vector<jellyfin::TaskInfo>>(
-        [ASYNC_TOKEN](const std::vector<jellyfin::TaskInfo>& r) {
-            ASYNC_RELEASE
-            for (auto& task : r) this->taskMap.insert_or_assign(task.Key, task.Id);
-        },
-        [ASYNC_TOKEN](const std::string& ex) {
-            ASYNC_RELEASE
-            brls::Application::notify(ex);
-        },
-        jellyfin::apiScheduledTasks);
-}
-
-void Dashboard::doRunTask(const std::string& id) {
-    auto it = this->taskMap.find(id);
-    if (it == this->taskMap.end()) return;
-
+void Dashboard::doScan() {
     this->btnScan->setState(brls::ButtonState::DISABLED);
     ASYNC_RETAIN
     jellyfin::postJSON(
@@ -529,5 +512,5 @@ void Dashboard::doRunTask(const std::string& id) {
             brls::Application::notify(ex);
             this->btnScan->setState(brls::ButtonState::ENABLED);
         },
-        jellyfin::apiRunTask, it->second);
+        jellyfin::apiLibraryRefresh);
 }

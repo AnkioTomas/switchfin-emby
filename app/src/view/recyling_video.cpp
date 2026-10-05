@@ -64,15 +64,16 @@ void RecylingVideo::doRequest(bool refresh) {
         this->start = 0;
         this->recycler->showSkeleton(this->pageSize);
     }
+    size_t offset = this->start;
     ASYNC_RETAIN
     jellyfin::getJSON<jellyfin::Result<jellyfin::Episode>>(
-        [ASYNC_TOKEN](const jellyfin::Result<jellyfin::Episode>& r) {
+        [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
             ASYNC_RELEASE
-            this->start = r.StartIndex + this->pageSize;
+            this->start = offset + this->pageSize;
             if (r.TotalRecordCount == 0) {
                 this->setVisibility(brls::Visibility::GONE);
                 this->recycler->clearData();
-            } else if (r.StartIndex == 0) {
+            } else if (offset == 0) {
                 this->setVisibility(brls::Visibility::VISIBLE);
                 this->recycler->setDataSource(new VideoDataSource(r.Items));
                 this->title->setSubtitle(std::to_string(r.TotalRecordCount));
@@ -121,15 +122,16 @@ void RecylingVideo::doLiveTV(bool refresh) {
         this->start = 0;
         this->recycler->showSkeleton(this->pageSize);
     }
+    size_t offset = this->start;
     ASYNC_RETAIN
     jellyfin::getJSON<jellyfin::Result<jellyfin::ProgramInfo>>(
-        [ASYNC_TOKEN](const jellyfin::Result<jellyfin::ProgramInfo>& r) {
+        [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::ProgramInfo>& r) {
             ASYNC_RELEASE
-            this->start = r.StartIndex + this->pageSize;
+            this->start = offset + this->pageSize;
             if (r.TotalRecordCount == 0) {
                 this->setVisibility(brls::Visibility::GONE);
                 this->recycler->clearData();
-            } else if (r.StartIndex == 0) {
+            } else if (offset == 0) {
                 this->setVisibility(brls::Visibility::VISIBLE);
                 this->recycler->setDataSource(new ProgramDataSource(r.Items));
             } else if (r.Items.size() > 0) {

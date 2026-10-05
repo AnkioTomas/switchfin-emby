@@ -137,14 +137,15 @@ void SongList::doList() {
         {"startIndex", std::to_string(this->start)},
     });
 
+    size_t offset = this->start;
     ASYNC_RETAIN
     jellyfin::getJSON<jellyfin::Result<jellyfin::Track>>(
-        [ASYNC_TOKEN](const jellyfin::Result<jellyfin::Track>& r) {
+        [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Track>& r) {
             ASYNC_RELEASE
-            this->start = r.StartIndex + this->pageSize;
+            this->start = offset + this->pageSize;
             if (r.TotalRecordCount == 0) {
                 this->list->clearData();
-            } else if (r.StartIndex == 0) {
+            } else if (offset == 0) {
                 this->list->setDataSource(new SongsDataSource(r.Items));
             } else if (r.Items.size() > 0) {
                 auto dataSrc = dynamic_cast<SongsDataSource*>(this->list->getDataSource());

@@ -260,14 +260,15 @@ void SearchTab::doSearch(const std::string& searchTerm) {
         {"startIndex", std::to_string(this->searchIndex)},
     });
 
+    size_t offset = this->searchIndex;
     ASYNC_RETAIN
     jellyfin::getJSON<jellyfin::Result<jellyfin::Episode>>(
-        [ASYNC_TOKEN](const jellyfin::Result<jellyfin::Episode>& r) {
+        [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
             ASYNC_RELEASE
-            this->searchIndex = r.StartIndex + this->pageSize;
+            this->searchIndex = offset + this->pageSize;
             if (r.TotalRecordCount == 0) {
                 this->searchSuggest->setEmpty( "main/search/no_results"_i18n, "icon/ico-search.svg");
-            } else if (r.StartIndex == 0) {
+            } else if (offset == 0) {
                 this->searchSuggest->setDataSource(new VideoDataSource(r.Items));
             } else if (r.Items.size() > 0) {
                 auto dataSrc = dynamic_cast<VideoDataSource*>(this->searchSuggest->getDataSource());

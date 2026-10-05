@@ -107,14 +107,15 @@ public:
             {"recursive", "true"},
         });
 
+        size_t offset = this->start;
         ASYNC_RETAIN
         jellyfin::getJSON<jellyfin::Result<jellyfin::Episode>>(
-            [ASYNC_TOKEN](const jellyfin::Result<jellyfin::Episode>& r) {
+            [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
                 ASYNC_RELEASE
-                this->start = r.StartIndex + this->pageSize;
+                this->start = offset + this->pageSize;
                 if (r.TotalRecordCount == 0) {
                     this->clearData();
-                } else if (r.StartIndex == 0) {
+                } else if (offset == 0) {
                     this->setDataSource(new VideoDataSource(r.Items, this->itemId));
                 } else if (r.Items.size() > 0) {
                     auto dataSrc = dynamic_cast<VideoDataSource*>(this->getDataSource());
@@ -326,14 +327,15 @@ void MediaCollection::doRequest() {
         query["recursive"] = "true";
     }
 
+    size_t offset = this->startIndex;
     ASYNC_RETAIN
     jellyfin::getJSON<jellyfin::Result<jellyfin::Episode>>(
-        [ASYNC_TOKEN](const jellyfin::Result<jellyfin::Episode>& r) {
+        [ASYNC_TOKEN, offset](const jellyfin::Result<jellyfin::Episode>& r) {
             ASYNC_RELEASE
-            this->startIndex = r.StartIndex + this->pageSize;
+            this->startIndex = offset + this->pageSize;
             if (r.TotalRecordCount == 0) {
                 this->recycler->setEmpty();
-            } else if (r.StartIndex == 0) {
+            } else if (offset == 0) {
                 this->recycler->setDataSource(new VideoDataSource(r.Items));
                 brls::Application::giveFocus(this->recycler);
             } else if (r.Items.size() > 0) {

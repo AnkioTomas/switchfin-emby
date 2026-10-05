@@ -18,8 +18,7 @@ const std::string_view apiUsers = "/Users";
 const std::string_view apiDevices = "/Devices";
 const std::string_view apiActivityLog = "/System/ActivityLog/Entries?{}";
 const std::string_view apiRestart = "/System/Restart";
-const std::string_view apiScheduledTasks = "/ScheduledTasks?isHidden=false";
-const std::string_view apiRunTask = "/ScheduledTasks/Running/{}";
+const std::string_view apiLibraryRefresh = "/Library/Refresh";
 const std::string_view apiSessionList = "/Sessions?{}";
 const std::string_view apiCapabilities = "/Sessions/Capabilities/Full";
 const std::string_view apiItemCount = "/Items/Counts";
@@ -36,9 +35,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PublicSystemInfo, Id, ServerName, Version);
 
 struct SystemInfo : public PublicSystemInfo {
     std::string LocalAddress;
-    std::string SystemArchitecture;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SystemInfo, Id, ServerName, Version, LocalAddress, SystemArchitecture);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SystemInfo, Id, ServerName, Version, LocalAddress);
 
 struct UserPolicy {
     bool IsAdministrator = false;
@@ -158,14 +156,4 @@ struct ItemCount {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     ItemCount, MovieCount, SeriesCount, EpisodeCount, SongCount, AlbumCount, MusicVideoCount);
-
-struct TaskInfo {
-    std::string Id;
-    std::string Name;
-    std::string State;
-    std::string Key;
-    bool IsHidden;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TaskInfo, Id, Name, State, Key, IsHidden);
-
 }  // namespace jellyfin

@@ -27,13 +27,10 @@ private:
     BRLS_BIND(HRecyclerFrame, itemCount, "dashboard/count");
     BRLS_BIND(brls::Box, mainBox, "dashboard/main/box");
 
-    std::unordered_map<std::string, std::string> taskMap;
-
     void doItemCount();
     void doSystemInfo();
     void doActivityWarn();
     void doSession();
     void doRestart();
-    void doListTask();
-    void doRunTask(const std::string& id);
+    void doScan();
 };
