@@ -206,7 +206,6 @@ std::string DownloadManager::buildDownloadUrl(const DownloadItem& item) const {
         return server + fmt::format(fmt::runtime(jellyfin::apiStream), item.itemId,
                             HTTP::encode_form({
                                 {"static", "false"},
-                                {"mediaSourceId", item.itemId},
                                 {"videoCodec", MPVCore::VIDEO_CODEC},
                                 {"audioCodec", "aac"},
                                 {"maxStreamingBitrate", "4000000"},
@@ -217,7 +216,6 @@ std::string DownloadManager::buildDownloadUrl(const DownloadItem& item) const {
         return server + fmt::format(fmt::runtime(jellyfin::apiStream), item.itemId,
                             HTTP::encode_form({
                                 {"static", "false"},
-                                {"mediaSourceId", item.itemId},
                                 {"videoCodec", MPVCore::VIDEO_CODEC},
                                 {"audioCodec", "aac"},
                                 {"maxStreamingBitrate", "2000000"},
@@ -228,7 +226,6 @@ std::string DownloadManager::buildDownloadUrl(const DownloadItem& item) const {
         return server + fmt::format(fmt::runtime(jellyfin::apiStream), item.itemId,
                             HTTP::encode_form({
                                 {"static", "false"},
-                                {"mediaSourceId", item.itemId},
                                 {"videoCodec", MPVCore::VIDEO_CODEC},
                                 {"audioCodec", "aac"},
                                 {"maxStreamingBitrate", "1000000"},

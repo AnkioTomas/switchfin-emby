@@ -228,11 +228,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Episode, Id, Name, Type, ImageTa
 
 struct Recommend {
     std::string BaselineItemName;
-    std::string CategoryId;
     std::string RecommendationType;
     std::vector<Episode> Items;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Recommend, BaselineItemName, CategoryId, RecommendationType, Items);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Recommend, BaselineItemName, RecommendationType, Items);
 
 using Recommends = std::vector<Recommend>;
 

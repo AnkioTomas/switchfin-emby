@@ -91,9 +91,7 @@ PlayerView::PlayerView(const jellyfin::Item& item, const uint64_t seekTicks, con
         }
     });
 
-    if (item.Type != jellyfin::mediaTypeTvChannel) {
-        this->sourceId = sourceId.empty() ? item.Id : sourceId;
-    }
+    this->sourceId = sourceId;
 
     this->setChapters(item.Chapters, item.RunTimeTicks);
     this->playMedia(seekTicks > 0 ? seekTicks : item.UserData.PlaybackPositionTicks);
@@ -168,7 +166,7 @@ bool PlayerView::playIndex(int index) {
 
     auto item = this->episodes.at(index);
     this->itemId = item.Id;
-    this->sourceId = item.Id;
+    this->sourceId.clear();
     this->setChapters(item.Chapters, item.RunTimeTicks);
     this->playMedia(0);
     view->setTitie(fmt::format("S{}E{} - {}", item.ParentIndexNumber, item.IndexNumber, item.Name));
@@ -297,7 +295,6 @@ void PlayerView::playMedia(const uint64_t seekTicks) {
 
     nlohmann::json param = {
         {"UserId", AppConfig::instance().getUserId()},
-        {"MediaSourceId", this->sourceId},
 #if defined(__PSV__)
         {"AlwaysBurnInSubtitleWhenTranscoding", PlayerSetting::selectedSubtitle > 0},
 #endif
@@ -305,6 +302,7 @@ void PlayerView::playMedia(const uint64_t seekTicks) {
         {"DeviceProfile", profile},
     };
 
+    if (!this->sourceId.empty()) param.push_back({"MediaSourceId", this->sourceId});
     if (PlayerSetting::selectedAudio > 0) param.push_back({"AudioStreamIndex", PlayerSetting::selectedAudio});
     if (PlayerSetting::selectedSubtitle > 0) param.push_back({"SubtitleStreamIndex", PlayerSetting::selectedSubtitle});
 
@@ -349,6 +347,7 @@ void PlayerView::playMedia(const uint64_t seekTicks) {
                             {"mediaSourceId", item.Id},
                             {"playSessionId", r.PlaySessionId},
                             {"tag", item.ETag},
+                            {"api_key", AppConfig::instance().getToken()},
                         }));
                     this->playMethod = jellyfin::methodDirectPlay;
                     mpv.setUrl(svr + url, ssextra.str());
