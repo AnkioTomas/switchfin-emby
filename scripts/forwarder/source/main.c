@@ -3,9 +3,14 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define HBMENU_NRO "sdmc:/hbmenu.nro"
-#define DEFAULT_NRO "sdmc:/switch/Switchfin.nro"
-#define APP_STORE_NRO "sdmc:/switch/Switchfin/Switchfin.nro"
+// Searched in order; the last entry is the fallback and is not checked.
+static const char* const g_nroCandidates[] = {
+    "sdmc:/switch/Switchfin-emby.nro",
+    "sdmc:/switch/Switchfin-emby/Switchfin-emby.nro",
+    "sdmc:/switch/Switchfin.nro",
+    "sdmc:/switch/Switchfin/Switchfin.nro",
+    "sdmc:/hbmenu.nro",
+};
 
 const char g_noticeText[] =
     "nx-hbloader " VERSION
@@ -317,16 +322,11 @@ void loadNro(void) {
     if (R_FAILED(rc)) diagAbortWithResult(MAKERESULT(Module_HomebrewLoader, 404));
 
     if (g_nextNroPath[0] == '\0') {
-        if (access(DEFAULT_NRO, F_OK) != -1) {
-            memcpy(g_nextNroPath, DEFAULT_NRO, sizeof(DEFAULT_NRO));
-            memcpy(g_nextArgv, DEFAULT_NRO, sizeof(DEFAULT_NRO));
-        } else if (access(APP_STORE_NRO, F_OK) != -1) {
-            memcpy(g_nextNroPath, APP_STORE_NRO, sizeof(APP_STORE_NRO));
-            memcpy(g_nextArgv, APP_STORE_NRO, sizeof(APP_STORE_NRO));
-        } else {
-            memcpy(g_nextNroPath, HBMENU_NRO, sizeof(HBMENU_NRO));
-            memcpy(g_nextArgv, HBMENU_NRO, sizeof(HBMENU_NRO));
-        }
+        size_t last = sizeof(g_nroCandidates) / sizeof(g_nroCandidates[0]) - 1;
+        size_t i = 0;
+        while (i < last && access(g_nroCandidates[i], F_OK) == -1) i++;
+        strcpy(g_nextNroPath, g_nroCandidates[i]);
+        strcpy(g_nextArgv, g_nroCandidates[i]);
     }
 
     memcpy(g_argv, g_nextArgv, sizeof g_argv);
