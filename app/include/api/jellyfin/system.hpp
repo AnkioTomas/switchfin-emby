@@ -16,7 +16,6 @@ const std::string apiBranding = "/Branding/Configuration";
 
 const std::string_view apiUsers = "/Users";
 const std::string_view apiDevices = "/Devices";
-const std::string_view apiStorage = "/System/Info/Storage";
 const std::string_view apiActivityLog = "/System/ActivityLog/Entries?{}";
 const std::string_view apiRestart = "/System/Restart";
 const std::string_view apiScheduledTasks = "/ScheduledTasks?isHidden=false";
@@ -24,11 +23,6 @@ const std::string_view apiRunTask = "/ScheduledTasks/Running/{}";
 const std::string_view apiSessionList = "/Sessions?{}";
 const std::string_view apiCapabilities = "/Sessions/Capabilities/Full";
 const std::string_view apiItemCount = "/Items/Counts";
-// apiQuickConnect
-const std::string apiQuickEnabled = "/QuickConnect/Enabled";
-const std::string apiQuickInitiate = "/QuickConnect/Initiate";
-const std::string apiQuickConnect = "/QuickConnect/Connect?secret={}";
-const std::string apiAuthWithQuickConnect = "/Users/AuthenticateWithQuickConnect";
 const std::string apiUserSetting = "/DisplayPreferences/usersettings?userId={}&client=emby";
 
 const std::string_view apiPlugins = "/Plugins";
@@ -85,14 +79,6 @@ struct AuthResult {
     UserInfo User;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(AuthResult, AccessToken, ServerId, User);
-
-struct QuickConnect {
-    bool Authenticated;
-    std::string Code;
-    std::string DateAdded;
-    std::string Secret;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(QuickConnect, Authenticated, Code, DateAdded, Secret);
 
 struct PlayStateInfo {
     std::string PlayMethod;
@@ -155,12 +141,12 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
 
 struct ActivityLog {
     std::string Name;
-    std::string ShortOverview;
+    std::string Overview;
     std::string Type;
     std::string Date;
     std::string UserId;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ActivityLog, Name, ShortOverview, Type, Date, UserId);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ActivityLog, Name, Overview, Type, Date, UserId);
 
 struct ItemCount {
     int MovieCount;
@@ -172,27 +158,6 @@ struct ItemCount {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     ItemCount, MovieCount, SeriesCount, EpisodeCount, SongCount, AlbumCount, MusicVideoCount);
-
-struct FolderInfo {
-    std::string Path;
-    int64_t FreeSpace;
-    int64_t UsedSpace;
-    std::string StorageType;
-    std::string DeviceId;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(FolderInfo, Path, FreeSpace, UsedSpace, StorageType, DeviceId);
-
-struct StorageInfo {
-    FolderInfo ProgramDataFolder;
-    FolderInfo WebFolder;
-    FolderInfo ImageCacheFolder;
-    FolderInfo CacheFolder;
-    FolderInfo LogFolder;
-    FolderInfo InternalMetadataFolder;
-    FolderInfo TranscodingTempFolder;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StorageInfo, ProgramDataFolder, WebFolder, ImageCacheFolder, CacheFolder, LogFolder,
-    InternalMetadataFolder, TranscodingTempFolder);
 
 struct TaskInfo {
     std::string Id;

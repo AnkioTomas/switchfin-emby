@@ -24,7 +24,7 @@
   },
   "about": {
     "header": "About",
-    "brief": "Yet another third-party jellyfin client",
+    "brief": "Yet another third-party Emby client",
     "repo_header": "Repository"
   },
   "dashboard": {
@@ -33,7 +33,7 @@
     "activity": "Activity",
     "path": "Path",
     "restart": "Restart",
-    "confirm_restart": "Are you sure you wish to restart Jellyfin?",
+    "confirm_restart": "Are you sure you wish to restart Emby?",
     "scan_all": "Scan All Libraries",
     "within_minute": "Within 1 minute",
     "minute_ago": "{} minutes ago",
@@ -189,7 +189,7 @@
       "header": "Server",
       "detail": "Server Details",
       "connect_new": "New Server",
-      "connect_to": "Connect to a Jellyfin server",
+      "connect_to": "Connect to a Emby server",
       "invalid": "URL must start with http:// or https://",
       "connect": "Connect",
       "delete": "Confirm to delete?",
@@ -279,14 +279,6 @@
       "font_a2": "1. Switchfin prioritizes the display of custom fonts, with built-in fonts as a fallback\n2. \"Settings - Tutorial\" provides a menu item to quickly open the config directory\n3. On Linux, Switchfin uses xdg-open to open the directory. If the configuration directory cannot be opened correctly, you can consider installing this tool",
       "font_q3": "Subtitles didn't display",
       "font_a3": "Put any ttf file at {}/subfont.ttf"
-    },
-    "quick_connect": {
-      "header": "Quick Connect",
-      "code": "Quick Connect code",
-      "invalid": "Invalid Quick Connect code",
-      "success": "Authorizing Quick Connect successful. Please continue on your other device.",
-      "steps": "1. Open the Jellyfin app on your phone or web browser and sign in with your account\n2. Open the user menu and go to the Quick Connect page\n3. Enter the following code:",
-      "disabled": "Note: Quick Connect not enabled"
     },
     "others": {
       "header": "Others",

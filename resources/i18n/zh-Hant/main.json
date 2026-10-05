@@ -24,7 +24,7 @@
   },
   "about": {
     "header": "關於軟體",
-    "brief": "專為搖桿控制設計的第三方跨平台Jellyfin播放器\n滿足日常使用, 目前支援 PC 全平台和 Nintendo Switch",
+    "brief": "專為搖桿控制設計的第三方跨平台Emby播放器\n滿足日常使用, 目前支援 PC 全平台和 Nintendo Switch",
     "repo_header": "原始碼連結"
   },
   "dashboard": {
@@ -33,7 +33,7 @@
     "activity": "活動",
     "path": "路徑",
     "restart": "重新啟動",
-    "confirm_restart": "您確定要重新啟動 Jellyfin 嗎？",
+    "confirm_restart": "您確定要重新啟動 Emby 嗎？",
     "scan_all": "掃描所有媒體庫",
     "within_minute": "不到 1 分鐘",
     "minute_ago": "{} 分鐘前",
@@ -189,7 +189,7 @@
       "header": "伺服器",
       "detail": "詳細資料",
       "connect_new": "新伺服器",
-      "connect_to": "連線到Jellyfin伺服器",
+      "connect_to": "連線到Emby伺服器",
       "invalid": "伺服器URL無效！",
       "connect": "連線",
       "delete": "是否刪除？",
@@ -279,14 +279,6 @@
       "font_a2": "1. 本程式優先顯示自訂字型，以內建字型作為後備\n2. 「設定 - 使用教學」 提供快速打開設定目錄的選單\n3. 在 Linux 上，Switchfin 使用 xdg-open 來打開目錄，如果無法正常開啟設定檔目錄，可以考慮安裝此工具",
       "font_q3": "字幕無法顯示",
       "font_a3": "將合適的 ttf 字形複製到 {}/subfont.ttf"
-    },
-    "quick_connect": {
-      "header": "快速連接",
-      "code": "快速連接驗證碼",
-      "invalid": "不正確的快速連接驗證碼",
-      "success": "成功授權快速連接。請在其他裝置上繼續。",
-      "steps": "1. 從手機或網頁瀏覽器打開 Jellyfin 並登錄您的帳號\n2. 點選使用者選單並開啟快速連接頁面\n3. 輸入下列驗證碼：",
-      "disabled": "注意: 未啟用快速連接功能"
     },
     "others": {
       "header": "其他",

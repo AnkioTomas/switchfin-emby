@@ -757,11 +757,11 @@ std::string AppConfig::getAuth(const std::string& token) {
     if (this->device_name.empty()) this->device_name = AppVersion::getDeviceName();
 
     if (token.empty())
-        return fmt::format("Authorization: MediaBrowser Client=\"{}\", Device=\"{}\", DeviceId=\"{}\", Version=\"{}\"",
+        return fmt::format("X-Emby-Authorization: MediaBrowser Client=\"{}\", Device=\"{}\", DeviceId=\"{}\", Version=\"{}\"",
             AppVersion::getPackageName(), this->device_name, this->device, AppVersion::getVersion());
     else
         return fmt::format(
-            "Authorization: MediaBrowser Client=\"{}\", Device=\"{}\", DeviceId=\"{}\", Version=\"{}\", "
+            "X-Emby-Authorization: MediaBrowser Client=\"{}\", Device=\"{}\", DeviceId=\"{}\", Version=\"{}\", "
             "Token=\"{}\"",
             AppVersion::getPackageName(), this->device_name, this->device, AppVersion::getVersion(), token);
 }

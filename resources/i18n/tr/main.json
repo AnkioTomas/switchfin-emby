@@ -24,7 +24,7 @@
   },
   "about": {
     "header": "Hakkında",
-    "brief": "Başka bir üçüncü taraf Jellyfin yazılımı daha",
+    "brief": "Başka bir üçüncü taraf Emby yazılımı daha",
     "repo_header": "Kaynak kodu"
   },
   "dashboard": {
@@ -33,7 +33,7 @@
     "activity": "Etkinlik",
     "path": "Dizin",
     "restart": "Yeniden Başlat",
-    "confirm_restart": "Jellyfin'i yeniden başlatmak istediğinize emin misiniz?",
+    "confirm_restart": "Emby'i yeniden başlatmak istediğinize emin misiniz?",
     "scan_all": "Tüm Kütüphaneleri Tara",
     "within_minute": "Son 1 dakika içinde",
     "minute_ago": "{} dakika önce",
@@ -189,7 +189,7 @@
       "header": "Sunucu",
       "detail": "Sunucu Ayrıntıları",
       "connect_new": "Yeni Sunucu",
-      "connect_to": "Bir Jellyfin sunucusuna bağlan",
+      "connect_to": "Bir Emby sunucusuna bağlan",
       "invalid": "Bağlantı http:// veya https:// ile başlamalıdır",
       "connect": "Bağlan",
       "delete": "Silmeyi onaylıyor musunuz?",
@@ -279,14 +279,6 @@
       "font_a2": "1. Switchfin, özel yazı tiplerinin görüntülenmesine öncelik verir; yerleşik yazı tipleri ise yedek olarak kullanılır.\n2. 'Ayarlar - Kılavuz' bölümünde, yapılandırma dizinini hızlıca açmak için bir menü öğesi bulunur.\n3. Linux’ta Switchfin, dizini açmak için xdg-open kullanır. Yapılandırma dizini düzgün şekilde açılamıyorsa bu aracı yüklemeyi düşünebilirsiniz.",
       "font_q3": "Alt yazılar görünmüyor",
       "font_a3": "Herhangi bir TTF dosyasını {}/subfont.ttf konumuna yerleştirin."
-    },
-    "quick_connect": {
-      "header": "Hızlı Bağlan",
-      "code": "Hızlı Bağlan kodu",
-      "invalid": "Geçersiz Hızlı Bağlan kodu",
-      "success": "Hızlı Bağlan başarıyla yetkilendirildi. Lütfen diğer cihazınızda devam edin.",
-      "steps": "1. Telefonunuzdaki veya web tarayıcınızdaki Jellyfin uygulamasını açın ve hesabınızla oturum açın.\n2. Kullanıcı menüsünü açın ve Hızlı Bağlan sayfasına gidin.\n3. Kodu girin:",
-      "disabled": "Not: Hızlı Bağlan etkin değil"
     },
     "others": {
       "header": "Diğer",

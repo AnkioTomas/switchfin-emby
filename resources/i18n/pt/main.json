@@ -24,7 +24,7 @@
   },
   "about": {
     "header": "Sobre a aplicação",
-    "brief": "Um cliente Jellyfin de terceiros feito especialmente para consolas\n",
+    "brief": "Um cliente Emby de terceiros feito especialmente para consolas\n",
     "repo_header": "Código Aberto"
   },
   "dashboard": {
@@ -33,7 +33,7 @@
     "activity": "Actividades",
     "path": "Directório",
     "restart": "Reiniciar",
-    "confirm_restart": "Tem a certeza de que pretende reiniciar o Jellyfin?",
+    "confirm_restart": "Tem a certeza de que pretende reiniciar o Emby?",
     "scan_all": "Fazer o scan todas as bibliotecas de media",
     "within_minute": "menos de 1 minuto",
     "minute_ago": "{} minutos atrás",
@@ -189,7 +189,7 @@
       "header": "Servidor",
       "detail": "Detalhes do servidor",
       "connect_new": "Novo Servidor",
-      "connect_to": "Conecte ao servidor Jellyfin",
+      "connect_to": "Conecte ao servidor Emby",
       "invalid": "O URL deve começar com http:// ou https://",
       "connect": "Conexão",
       "delete": "Deseja remover?",
@@ -279,14 +279,6 @@
       "font_a2": "1. O Swichfin dá prioridade à apresentação de tipos de letra personalizados, utilizando as fontes integradas como alternativa.\n2. O menu \"Definições - Manual do Utilizador\" oferece uma opção para aceder rapidamente ao diretório de configuração.",
       "font_q3": "Subtítulos não são mostradas",
       "font_a3": "Coloque qualquer ficheiro .ttf em {}/subfont.ttf"
-    },
-    "quick_connect": {
-      "header": "Ligação rápida",
-      "code": "Código de Ligação Rápida",
-      "invalid": "Código de Ligação Rápida inválido",
-      "success": "Autorização de Ligação Rápida bem-sucedida. Continue no outro aparelho.",
-      "steps": "1.º Abra o Jellyfin na aplicação móvel ou no browser e inicie sessão na sua conta\n2.º Abra o menu do utilizador e aceda à página de ligação rápida\n3.º Introduza o seguinte código de verificação:",
-      "disabled": "Nota: a ligação rápida não está ativada."
     },
     "others": {
       "header": "Outros",

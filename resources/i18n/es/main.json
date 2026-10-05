@@ -24,7 +24,7 @@
   },
   "about": {
     "header": "Acerca de",
-    "brief": "Otro cliente de Jellyfin de terceros",
+    "brief": "Otro cliente de Emby de terceros",
     "repo_header": "Repositorio"
   },
   "dashboard": {
@@ -33,7 +33,7 @@
     "activity": "Actividad",
     "path": "Ruta",
     "restart": "Reiniciar",
-    "confirm_restart": "¿Estás seguro qué deseas reiniciar Jellyfin?",
+    "confirm_restart": "¿Estás seguro qué deseas reiniciar Emby?",
     "scan_all": "Escanear todas las bibliotecas",
     "within_minute": "Menos de 1 minuto",
     "minute_ago": "Hace {} minutos",
@@ -189,7 +189,7 @@
       "header": "Servidor",
       "detail": "Detalles del servidor",
       "connect_new": "Nuevo servidor",
-      "connect_to": "Conectar a un servidor Jellyfin",
+      "connect_to": "Conectar a un servidor Emby",
       "invalid": "La URL debe comenzar con http:// o https://",
       "connect": "Conectar",
       "delete": "¿Confirmar borrado?",
@@ -279,14 +279,6 @@
       "font_a2": "1. Switchfin prioriza mostrar las fuentes personalizadas, usando las integradas en caso de fallo.\n2. \"Ajustes - Tutorial\" ofrece un menú para abrir rápidamente el directorio de configuración",
       "font_q3": "No se muestran los subtítulos",
       "font_a3": "Coloca un fichero ttf en {}/subfont.ttf"
-    },
-    "quick_connect": {
-      "header": "Conexión rápida",
-      "code": "Código de conexión rápida",
-      "invalid": "Código de conexión rápida inválido",
-      "success": "Autorización de conexión rápida satisfactoria. Por favor continua en el otro dispositivo.",
-      "steps": "1. Abre la aplicación de Jellyfin en tu teléfono o navegador y conecta con tu cuenta\n2. Abre el menú de usuario y accede a la página de Conexión rápida\n3. Introduce en siguiente código:",
-      "disabled": "Atención: Conexión válida no habilitada"
     },
     "others": {
       "header": "Miscelánea",
