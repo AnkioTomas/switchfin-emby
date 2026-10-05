@@ -2,19 +2,19 @@
 <component type="desktop">
     <id>fun.dragonfly.switchfin-emby</id>
     <metadata_license>CC0-1.0</metadata_license>
-    <name>Switchfin</name>
+    <name>Switchfin-emby</name>
     <project_license>Apache-2.0</project_license>
-    <developer id="fun.dragonfly">
-        <name>dragonflylee</name>
+    <developer id="io.github.ankiotomas">
+        <name>AnkioTomas</name>
     </developer>
-    <summary>Third-party native Jellyfin client</summary>
+    <summary>Third-party native Emby client</summary>
     <launchable type="desktop-id">fun.dragonfly.switchfin-emby.desktop</launchable>
     <translation type="gettext">switchfin</translation>
     <content_rating type="oars-1.1">
         <content_attribute id="social-info">mild</content_attribute>
     </content_rating>
     <description>
-        <p>Switchfin is third-party PC player for Jellyfin that designed specifically for controller users to browse and play movies and series.</p>
+        <p>Switchfin-emby is a third-party player for Emby, designed specifically for controller users to browse and play movies and series.</p>
         <p>Features:</p>
         <ul>
             <li>Completely native interface</li>
@@ -36,13 +36,13 @@
     </branding>
     <keywords>
         <keyword>media player</keyword>
-        <keyword>jellyfin client</keyword>
+        <keyword>emby client</keyword>
     </keywords>
     <releases>
-        <release date="2026-08-25" version="0.9.4">
+        <release date="2026-10-05" version="0.9.5">
             <description>
                 <p>
-                    Please See Official Changelog at github.com/dragonflylee/switchfin/releases
+                    Please See Official Changelog at github.com/AnkioTomas/switchfin-emby/releases
                 </p>
             </description>
         </release>
@@ -65,7 +65,7 @@
             <caption>Music</caption>
         </screenshot>
     </screenshots>
-    <url type="homepage">https://dragonflylee.github.io/switchfin</url>
-    <url type="vcs-browser">https://github.com/dragonflylee/switchfin</url>
-    <url type="bugtracker">https://github.com/dragonflylee/switchfin/issues</url>
+    <url type="homepage">https://github.com/AnkioTomas/switchfin-emby</url>
+    <url type="vcs-browser">https://github.com/AnkioTomas/switchfin-emby</url>
+    <url type="bugtracker">https://github.com/AnkioTomas/switchfin-emby/issues</url>
 </component>

@@ -81,7 +81,7 @@ private:
 };
 
 const std::string HTTP::USER_AGENT = fmt::format(
-    "Mozilla/5.0 {}/{} ({})", AppVersion::getPackageName(), AppVersion::getVersion(), AppVersion::getPlatform());
+    "Mozilla/5.0 {}/{} ({})", AppVersion::getAppName(), AppVersion::getVersion(), AppVersion::getPlatform());
 
 /// @brief curl context
 

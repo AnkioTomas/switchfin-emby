@@ -29,6 +29,8 @@ std::string AppVersion::getVersion() { return STR(APP_VERSION); }
 
 std::string AppVersion::getPackageName() { return STR(BUILD_PACKAGE_NAME); }
 
+std::string AppVersion::getAppName() { return STR(BUILD_APP_NAME); }
+
 std::string AppVersion::getCommit() { return STR(BUILD_TAG_SHORT); }
 
 std::string AppVersion::getPlatform() {
@@ -109,7 +111,7 @@ std::string AppVersion::getDeviceName() {
         return name;
     }
 #endif
-    return fmt::format("{} for {}", getPackageName(), getPlatform());
+    return fmt::format("{} for {}", getAppName(), getPlatform());
 }
 
 bool AppVersion::needUpdate(std::string latestVersion) { return false; }

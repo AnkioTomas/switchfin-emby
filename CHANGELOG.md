@@ -25,6 +25,7 @@ First release of Switchfin for Emby, forked from Switchfin 0.9.4. Only Emby Serv
 * update checks and downloads now use AnkioTomas/switchfin-emby
 * app id is now `fun.dragonfly.switchfin-emby` (Android: `fun.dragonfly.switchfin_emby`), so it installs next to upstream Switchfin
 * release assets are named `Switchfin-emby-*`
+* app is shown as "Switchfin-emby" (window title, homebrew menu, launchers, Emby device list); author is AnkioTomas
 
 ## [0.9.4]
 

@@ -40,7 +40,7 @@ public:
     SettingAbout() {
         this->inflateFromXMLRes("xml/view/setting_about.xml");
 
-        this->labelTitle->setText(AppVersion::getPackageName());
+        this->labelTitle->setText(AppVersion::getAppName());
         this->labelVersion->setText(fmt::format("v{}-{} ({})", AppVersion::getVersion(), AppVersion::getCommit(),
 #if defined(BOREALIS_USE_D3D11)
             "D3D11"

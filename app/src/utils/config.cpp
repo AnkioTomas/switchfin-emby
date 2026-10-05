@@ -758,12 +758,12 @@ std::string AppConfig::getAuth(const std::string& token) {
 
     if (token.empty())
         return fmt::format("X-Emby-Authorization: MediaBrowser Client=\"{}\", Device=\"{}\", DeviceId=\"{}\", Version=\"{}\"",
-            AppVersion::getPackageName(), this->device_name, this->device, AppVersion::getVersion());
+            AppVersion::getAppName(), this->device_name, this->device, AppVersion::getVersion());
     else
         return fmt::format(
             "X-Emby-Authorization: MediaBrowser Client=\"{}\", Device=\"{}\", DeviceId=\"{}\", Version=\"{}\", "
             "Token=\"{}\"",
-            AppVersion::getPackageName(), this->device_name, this->device, AppVersion::getVersion(), token);
+            AppVersion::getAppName(), this->device_name, this->device, AppVersion::getVersion(), token);
 }
 
 const std::vector<AppUser> AppConfig::getUsers(const std::string& id) const {

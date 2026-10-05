@@ -419,7 +419,7 @@ void DownloadView::updateStorage() {
     }
 
     size_t count = items.size();
-    this->storageApp->setText(fmt::format("{}: {} · {} {}", AppVersion::getPackageName(),
+    this->storageApp->setText(fmt::format("{}: {} · {} {}", AppVersion::getAppName(),
         appBytes > 0 ? misc::formatSize(appBytes) : "0GB", count, "main/download/items"_i18n));
 
     // capacity/available: std::filesystem::space and boost::filesystem::space

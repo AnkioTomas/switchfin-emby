@@ -312,7 +312,7 @@
       },
       "config_dir": "Konfigurationsordner",
       "logout": "Vom aktuellen Konto abmelden \n(die Applikation wird beendet)",
-      "up2date": "Switchfin ist auf dem neusten Stand",
+      "up2date": "Switchfin-emby ist auf dem neusten Stand",
       "upgrade": "{} is verfügbar! Jetzt aktualisieren?",
       "updating": "Aktualisierung läuft, jetzt abbrechen?",
       "release": "Suche nach Aktualisierungen"
@@ -321,8 +321,8 @@
   "hints": {
     "hint1": "Selektiere ein Spiel vom Homescreen",
     "hint2": "Halte die -Taste drücke die -Taste um hbmenu zu öffnen",
-    "hint3": "Wähle Switchfin in hbmenu",
-    "hint4": "Optional: Verwende den bereitgestellten Switchfin NSP forwarder",
+    "hint3": "Wähle Switchfin-emby in hbmenu",
+    "hint4": "Optional: Verwende den bereitgestellten Switchfin-emby NSP forwarder",
     "hint_nsp": "Drücke  um den NSP forwarder zu installieren",
     "hint_confirm": "NSP forwarder zu installieren kann zu einem Ban von Nintendo führen\nBitte erneut bestätigen",
     "hint_right": "Die Bilder sind vom Internet und gehören Nintendo Co., Ltd"

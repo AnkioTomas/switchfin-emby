@@ -825,7 +825,7 @@ bool VideoView::close(bool quit) {
 }
 
 void VideoView::disableDimming(bool disable) {
-    brls::Application::getPlatform()->disableScreenDimming(disable, "Playing video", AppVersion::getPackageName());
+    brls::Application::getPlatform()->disableScreenDimming(disable, "Playing video", AppVersion::getAppName());
     brls::Application::setAutomaticDeactivation(!disable);
 }
 

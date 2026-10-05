@@ -1,7 +1,7 @@
 Source: switchfin
 Section: video
 Priority: optional
-Maintainer: dragonflylee <dragonflylee@outlook.com>
+Maintainer: ankio <ankio@ankio.net>
 Build-Depends: debhelper (>= 10),
                cmake,
                ninja-build,
@@ -13,10 +13,10 @@ Build-Depends: debhelper (>= 10),
                libjbig2dec0-dev,
                libgumbo-dev,
                libmpv-dev
-Vcs-Git: https://github.com/dragonflylee/switchfin.git
+Vcs-Git: https://github.com/AnkioTomas/switchfin-emby.git
 
 Package: switchfin
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Architecture: any
 Recommends: va-driver-all
-Description: Third-party native Jellyfin client for Nintendo Switch
+Description: Third-party native Emby client

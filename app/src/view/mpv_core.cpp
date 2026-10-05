@@ -322,7 +322,7 @@ void MPVCore::init() {
     brls::Logger::info("version: {} ffmpeg {}", mpv_get_property_string(mpv, "mpv-version"),
         mpv_get_property_string(mpv, "ffmpeg-version"));
 
-    this->command("set", "audio-client-name", AppVersion::getPackageName().c_str());
+    this->command("set", "audio-client-name", AppVersion::getAppName().c_str());
     // set event callback
     mpv_set_wakeup_callback(mpv, on_wakeup, this);
 #ifndef ANDROID
