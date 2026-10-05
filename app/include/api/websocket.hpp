@@ -31,7 +31,10 @@ private:
 #else
     pthread_t th;
 #endif
+    // hb lives on the main thread only: Ticking::runningTickings is not thread-safe,
+    // the recv thread toggles alive instead of starting/stopping hb
     brls::RepeatingTimer hb;
+    std::atomic_bool alive{false};
     std::atomic_bool isStop{false};
     std::mutex easyMutex;
     void *easy = nullptr;

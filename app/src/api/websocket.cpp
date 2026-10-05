@@ -30,6 +30,7 @@ websocket::websocket(const std::string& url) {
     curl_easy_setopt(this->easy, CURLOPT_XFERINFODATA, this);
 
     hb.setCallback([this]() {
+        if (!this->alive.load()) return;
         brls::async([this]() {
             // 析构已开始则不再使用 easy，避免与 cleanup 竞态
             if (this->isStop.load()) return;
@@ -39,6 +40,7 @@ websocket::websocket(const std::string& url) {
             curl_ws_send(this->easy, msgKeepAlive.data(), slen, &slen, 0, CURLWS_TEXT);
         });
     });
+    hb.start(20000);
 
 #ifdef BOREALIS_USE_STD_THREAD
     this->th = std::make_shared<std::thread>(wsRecv, this);
@@ -77,7 +79,7 @@ void* websocket::wsRecv(void* ptr) {
     for (uint64_t t = 500;; t = std::min<uint64_t>(t * 2, 60000)) {
         CURLcode res = curl_easy_perform(p->easy);
         if (res == CURLE_OK) break;
-        p->hb.stop();
+        p->alive.store(false);
         brls::Logger::warning("ws perform failed: {}", curl_easy_strerror(res));
         // 分段睡眠，退出时不必等完整个退避周期（最长 60s）
         for (uint64_t slept = 0; slept < t && !p->isStop.load(); slept += 100) retro_sleep(100);
@@ -152,7 +154,7 @@ size_t websocket::onMsg(char* b, size_t size, size_t nitems, void* ptr) {
                     {"SupportsMediaControl", true},
                 },
                 [](...) {}, nullptr, jellyfin::apiCapabilities);
-            p->hb.start(20000);
+            p->alive.store(true);
         } else if (m.MessageType == "Sessions") {
         } else if (m.MessageType != "KeepAlive") {
             brls::Logger::debug("ws recv: {}", resp);
