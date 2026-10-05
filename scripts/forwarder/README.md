@@ -4,7 +4,7 @@ bash
 ```shell
 make -C scripts/forwarder Switchfin.nacp
 
-hacbrewpack -k prod.keys --titleid 010FF000FFFF0003 --titlename Switchfin --noromfs --nologo
+hacbrewpack -k prod.keys --titleid 010FF000FFFFE000 --titlename Switchfin-emby --noromfs --nologo
 ```
 
 # Thanks to
