@@ -169,7 +169,6 @@ void MusicView::load(const std::vector<jellyfin::Track>& items, size_t index) {
     std::stringstream ssextra;
     ssextra << fmt::format("network-timeout={}", HTTP::TIMEOUT / 100);
     if (HTTP::PROXY_STATUS) ssextra << ",http-proxy=\"" << HTTP::PROXY << "\"";
-    ssextra << fmt::format(",http-header-fields='X-Emby-Token: {}'", conf.getToken());
 
     if (!this->playSession) this->registerMpvEvent();
 
@@ -182,6 +181,7 @@ void MusicView::load(const std::vector<jellyfin::Track>& items, size_t index) {
     std::string query = HTTP::encode_form({
         {"static", "true"},
         {"PlaySessionId", std::to_string(playSession)},
+        {"api_key", conf.getToken()},
     });
 
     for (auto& item : items) {
