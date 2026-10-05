@@ -1,4 +1,4 @@
-app-id: fun.dragonfly.switchfin
+app-id: fun.dragonfly.switchfin-emby
 runtime: org.freedesktop.Platform
 runtime-version: "25.08"
 sdk: org.freedesktop.Sdk

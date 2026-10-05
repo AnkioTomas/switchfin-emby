@@ -6,6 +6,7 @@ android {
     namespace = "fun.dragonfly.switchfin"
     compileSdkVersion 34
     defaultConfig {
+        applicationId "fun.dragonfly.switchfin_emby"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode project.findProperty('versionCode')?.toInteger() ?: 1

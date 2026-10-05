@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-    <id>fun.dragonfly.switchfin</id>
+    <id>fun.dragonfly.switchfin-emby</id>
     <metadata_license>CC0-1.0</metadata_license>
     <name>Switchfin</name>
     <project_license>Apache-2.0</project_license>
@@ -8,7 +8,7 @@
         <name>dragonflylee</name>
     </developer>
     <summary>Third-party native Jellyfin client</summary>
-    <launchable type="desktop-id">fun.dragonfly.switchfin.desktop</launchable>
+    <launchable type="desktop-id">fun.dragonfly.switchfin-emby.desktop</launchable>
     <translation type="gettext">switchfin</translation>
     <content_rating type="oars-1.1">
         <content_attribute id="social-info">mild</content_attribute>
