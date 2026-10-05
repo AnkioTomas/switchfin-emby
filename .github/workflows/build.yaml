@@ -2,23 +2,7 @@ name: build
 
 on:
   push:
-    tags-ignore:
-    - switch-portlibs
-    - vita-packages
-    - pacbrew
-    - mingw-packages
-    - macos-dylib
-    paths-ignore:
-    - scripts/**
-    - debian/*
-    - images/*
-    - CHANGELOG.md
-    - README.md
-    branches: [ dev ]
-  pull_request:
-    paths-ignore:
-    - scripts/**
-    branches: [ dev ]
+    tags: [ '[0-9]+.[0-9]+.[0-9]+' ]
   workflow_dispatch:
     inputs:
       platform:
@@ -43,7 +27,7 @@ on:
 
 jobs:
   upload-release:
-    needs: [ build-mingw, build-nx, build-macos, build-flatpak, build-aur, build-ps4, build-vita, build-android ]
+    needs: [ build-mingw, build-nx, build-macos, build-flatpak, build-aur, build-deb, build-ps4, build-vita, build-android ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -72,6 +56,11 @@ jobs:
         for p in Switchfin-emby-windows-*; do
           [[ -d $p ]] && 7z a -tzip -mx9 $p.zip ./$p/* && rm -rf $p
         done
+        for f in Switchfin-emby-NintendoSwitch-deko3d-*/Switchfin.nro; do mv "$f" "${f%/*}/Switchfin-emby.nro"; done
+        for f in Switchfin-emby-{ubuntu,debian}-*/switchfin_*.deb; do
+          d=${f%/*}; dist=$(cut -d- -f3,4 <<< "$d"); v=${f##*/switchfin_}
+          mv "$f" "$d/switchfin-emby_${v%_*}_${dist}_${v##*_}"
+        done
         for f in Switchfin-emby-Vita-*/Switchfin.vpk; do mv "$f" "${f%/*}/Switchfin-emby.vpk"; done
         for f in Switchfin-emby-PS4-*/*.pkg; do mv "$f" "${f%/*}/Switchfin-emby-PS4.pkg"; done
         for f in Switchfin-emby-Archlinux-*/switchfin-*.pkg.tar.*; do mv "$f" "${f%/*}/switchfin-emby-${f##*/switchfin-}"; done
@@ -91,6 +80,8 @@ jobs:
           Switchfin-emby-Vita-*/*.vpk
           Switchfin-emby-Flatpak-*/*.flatpak
           Switchfin-emby-Archlinux-*/*.pkg.tar.*
+          Switchfin-emby-ubuntu-*/*.deb
+          Switchfin-emby-debian-*/*.deb
           Switchfin-emby-android-*/*.apk
 
   build-nx:
@@ -270,7 +261,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     container:
       image: ${{ matrix.img }}:${{ matrix.tag }}
-    if: ${{ inputs.platform == 'deb' }}
+    if: ${{ inputs.platform == 'deb' || github.event_name != 'workflow_dispatch' }}
     steps:
     - name: Install dependency
       env:
