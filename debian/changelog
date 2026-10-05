@@ -1,3 +1,10 @@
+switchfin (0.9.6-1) unstable; urgency=medium
+
+  * fix crash during long playback on Switch hardware decoding
+  * new Emby style app icon
+
+ -- ankio <ankio@ankio.net>  Mon, 05 Oct 2026 23:10:00 +0800
+
 switchfin (0.9.5-1) unstable; urgency=medium
 
   * switch to Emby Server

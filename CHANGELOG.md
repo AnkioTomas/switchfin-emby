@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.9.6]
+
+### Fixed
+
+* Switch: app crashing with 2168-0002 after a while of playback (hardware decoder used a freed context after re-initialization)
+* Switch: possible crash when the websocket reconnects (heartbeat timer was started/stopped off the main thread)
+
+### Changed
+
+* new app icon based on the Emby logo
+* Switch: logs are written to `sdmc:/switch/Switchfin/switchfin.log` (previous run kept as `switchfin.old.log`)
+* Switch NSP forwarder looks for `Switchfin-emby.nro` first, then the old Switchfin paths
+* CI builds switch-ffmpeg from the patch in this repository
+
 ## [0.9.5]
 
 First release of Switchfin for Emby, forked from Switchfin 0.9.4. Only Emby Server is supported.
