@@ -25,6 +25,16 @@ foreach(l ${_MuPDF_LIBRARY_NAMES})
     list(APPEND MuPDF_LIBRARY ${MuPDF_LIBRARY_${l}})
 endforeach ()
 
+# Debian/Ubuntu only ship a static libmupdf.a linked against system third-party libs
+if (MuPDF_LIBRARY_mupdf MATCHES "/libmupdf\\.a$" AND NOT (PLATFORM_SWITCH OR PLATFORM_PSV))
+    foreach(l mujs gumbo jbig2dec openjp2 jpeg harfbuzz freetype z m)
+        find_library(MuPDF_DEP_${l} NAMES ${l})
+        if (MuPDF_DEP_${l})
+            list(APPEND MuPDF_LIBRARY ${MuPDF_DEP_${l}})
+        endif ()
+    endforeach ()
+endif ()
+
 get_filename_component(_MuPDF_LIBRARY_DIR ${MuPDF_LIBRARY_mupdf} PATH)
 
 set(MuPDF_LIBRARY_DIRS _MuPDF_LIBRARY_DIR)
