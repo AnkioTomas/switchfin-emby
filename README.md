@@ -1,21 +1,21 @@
-# Switchfin
+# Switchfin for Emby
 
 <img src="scripts/switchfin.svg" alt="icon" height="128" width="128" align="left">
 
-Switchfin is third-party PC player for Jellyfin that provides a native user interface to browse and play movies and series.
+A third-party player for **Emby** that provides a native, gamepad-friendly user interface to browse and play movies, series and music.
+It is a fork of [Switchfin](https://github.com/dragonflylee/switchfin) (a Jellyfin client), ported to talk to Emby Server only.
 <br>
 
-[![build](https://github.com/dragonflylee/switchfin/actions/workflows/build.yaml/badge.svg)](https://github.com/dragonflylee/switchfin/actions/workflows/build.yaml)
-[![NS](https://img.shields.io/badge/-Nintendo%20Switch-e4000f?style=flat&logo=Nintendo%20Switch)](https://hb-app.store/switch/Switchfin)
-[![PSVita](https://img.shields.io/badge/-PSVita-003791?style=flat&logo=PlayStation)](https://www.rinnegatamante.eu/vitadb/#/info/1258)
-[![PS4](https://img.shields.io/badge/-PS4-003791?style=flat&logo=PlayStation)](https://pkg-zone.com/details/SFIN00000)
-[![Flathub](https://img.shields.io/flathub/v/fun.dragonfly.switchfin)](https://flathub.org/apps/fun.dragonfly.switchfin)
-[![download](https://img.shields.io/github/downloads/dragonflylee/switchfin/total?label=Downloads)](https://github.com/dragonflylee/switchfin/releases/latest)
-[![nightly](https://img.shields.io/badge/nightly-build-green)](https://nightly.link/dragonflylee/switchfin/workflows/build.yaml/dev)
+[![build](https://github.com/AnkioTomas/switch-emby/actions/workflows/build.yaml/badge.svg)](https://github.com/AnkioTomas/switch-emby/actions/workflows/build.yaml)
+[![download](https://img.shields.io/github/downloads/AnkioTomas/switch-emby/total?label=Downloads)](https://github.com/AnkioTomas/switch-emby/releases/latest)
 
-**This project is in its early stages so expect bugs.**
+**This project is in its early stages so expect bugs.** Tested against Emby Server 4.9.5.
+
+> Jellyfin servers are **not** supported by this fork. If you use Jellyfin, use upstream [Switchfin](https://github.com/dragonflylee/switchfin).
 
 ## Screenshots
+
+Screenshots are from upstream Switchfin; the layout is the same.
 
 <table>
   <tbody>
@@ -60,21 +60,35 @@ Switchfin is third-party PC player for Jellyfin that provides a native user inte
   - Subtitle codecs: SRT, VTT, SSA/ASS, DVDSUB
   - Hardware-accelerated decoding; fallback to software decoding when needed
 
+### Emby Integration
+- **Home screen follows your Emby settings** — the rows and their order come from the home screen sections configured in the Emby web client (*Settings → Home Screen*), per user
+  - Supported sections: continue watching, next up, latest media (one row per library, honoring "exclude from latest"), latest movie releases, collections, playlists, live TV on now
+  - Not yet supported: library tiles, continue listening, active recordings, latest downloads
+- **Embedded lyrics** — synced LRC lyrics stored in audio files are shown while music plays: the current line under the player controls, and a scrolling lyrics panel (press **X** on a music page to swap the track list with lyrics)
+- Music album art via Emby's `PrimaryImageItemId`
+
 ### Remote File Browser
 - Browse and play media from external sources:
   - **WebDAV** · **HTTP(S)** · **SFTP** · **FTP** · **local filesystem**
 - Manage multiple remote sources with add/edit/remove
 
 ### Additional Features
-- **Danmaku (弹幕)** — integration with [jellyfin-plugin-danmu](https://github.com/cxfksword/jellyfin-plugin-danmu)
 - **Download** — save media for offline viewing, with series batch download
-- **MirrorPlay** — remote playback control via WebSocket (browse on phone, play on big screen)
-- **Dashboard** — monitor server sessions, activities, and device status; restart and rescan libraries
+- **Dashboard** — monitor server sessions, activities, and devices; restart the server and rescan libraries
 - **Search** — full-text search with suggestions across all media types
 - **14 languages** — English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português, Русский, Čeština, Türkçe, Українська, Tiếng Việt
 - External drive support on Nintendo Switch via [libusbhsfs](https://github.com/DarkMatterCore/libusbhsfs)
 
-## Input Mapping (Playback)
+### Differences from upstream Switchfin
+- Only Emby Server is supported (`X-Emby-Authorization`, Emby paging and media source semantics)
+- **Quick Connect** login is removed (Emby has no equivalent); log in with user name and password
+- Server storage info and the scheduled task list are removed from the dashboard (no Emby API)
+- **Danmaku** still requires [jellyfin-plugin-danmu](https://github.com/cxfksword/jellyfin-plugin-danmu), which only exists for Jellyfin, so it does not work with Emby
+- **MirrorPlay** (remote control over WebSocket) is inherited from upstream and has not been tested on Emby yet
+
+## Input Mapping
+
+### Video Playback
 
 | Gamepad | Keyboard | Description |
 |---------|----------|-------------|
@@ -86,6 +100,14 @@ Switchfin is third-party PC player for Jellyfin that provides a native user inte
 | +       | F1       | Show video profile |
 | R stick | F2       | Toggle video quality |
 | L stick | F3       | Toggle playback speed |
+
+### Music Pages (album, songs, playlist)
+
+| Gamepad | Description |
+|---------|-------------|
+| Y       | Play / Pause |
+| LB / RB | Previous / Next track |
+| X       | Toggle between track list and lyrics |
 
 Keyboard bindings can be customized in Settings.
 
@@ -114,11 +136,22 @@ Keyboard bindings can be customized in Settings.
 
 | Platform | Requirement |
 |----------|-------------|
+| Server   | Emby Server (tested on 4.9.5) |
 | Windows  | Windows 7 or later with DirectX 11.1 support |
 | macOS    | Intel or Apple Silicon, macOS 10.15 or later |
-| Linux    | x86\_64 / arm64v8 with OpenGL 3.0+, Flatpak recommended |
+| Linux    | x86\_64 / arm64v8 with OpenGL 3.0+ |
+
+## Known Issues
+
+- The app still uses Switchfin's name, application ID and config location, so it replaces an installed upstream Switchfin and shares its settings.
 
 ## FAQ
+
+**Q: The home screen shows different rows than I expected?**
+A: The rows follow the home screen sections of the logged-in user in the Emby web client (*Settings → Home Screen*). Change them there and refresh the home tab.
+
+**Q: Lyrics don't show for a song?**
+A: Only lyrics that Emby exposes as an embedded lyrics stream are shown. Check that the song lists a `Lyrics` subtitle stream in the Emby web client.
 
 **Q: Subtitles don't display on Nintendo Switch?**
 A: Place a `.ttf` font file at `/switch/Switchfin/subfont.ttf`.
@@ -167,7 +200,7 @@ sudo xattr -rd com.apple.quarantine /Applications/Switchfin.app
 ## Development
 
 ```shell
-git clone https://github.com/dragonflylee/switchfin.git --recurse-submodules --shallow-submodules
+git clone https://github.com/AnkioTomas/switch-emby.git --recurse-submodules --shallow-submodules
 ```
 
 ### Nintendo Switch
@@ -191,6 +224,24 @@ cmake -B build -DPLATFORM_DESKTOP=ON
 cmake --build build
 ```
 
+#### macOS local build notes (Homebrew)
+
+The app bundle is assembled with dylibbundler. Two issues show up with incremental local builds:
+
+- dylibbundler refuses to overwrite existing files, so delete `Frameworks` before rebuilding.
+- Homebrew's libmpv may end up with a duplicated `LC_RPATH`, which makes dyld refuse to load it. Remove the duplicates and re-sign:
+
+```bash
+rm -rf build/Switchfin.app/Contents/Frameworks && cmake --build build
+cd build/Switchfin.app/Contents
+for f in Frameworks/*.dylib; do
+  while [ "$(otool -l "$f" | grep -c 'path @executable_path/../Frameworks/')" -gt 1 ]; do
+    install_name_tool -delete_rpath @executable_path/../Frameworks/ "$f"
+  done
+done
+codesign --sign - --force Frameworks/*
+```
+
 ### Windows (MinGW64)
 
 ```bash
@@ -201,6 +252,7 @@ cmake --build build_mingw
 
 ## Acknowledgements
 
+- **@dragonflylee** for [Switchfin](https://github.com/dragonflylee/switchfin), which this project is based on
 - **@xfangfang** for [wiliwili](https://github.com/xfangfang/wiliwili)
 - @devkitpro and switchbrew for [libnx](https://github.com/switchbrew/libnx)
 - @natinusala and XITRIX for [borealis](https://github.com/natinusala/borealis)
