@@ -57,7 +57,9 @@
     "next": "Next",
     "error": "Playback error",
     "episode": "Episode",
-    "speed_up": "Current speed {}"
+    "speed_up": "Current speed {}",
+    "lyric": "Lyrics",
+    "no_lyric": "No lyrics"
   },
   "ebook": {
     "zoom": "Zoom",

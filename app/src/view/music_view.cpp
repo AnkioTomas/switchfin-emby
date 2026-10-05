@@ -2,13 +2,45 @@
 #include "view/mpv_core.hpp"
 #include "view/svg_image.hpp"
 #include "view/video_progress_slider.hpp"
+#include "view/lyric_view.hpp"
 #include "utils/config.hpp"
 #include "utils/keybind.hpp"
 #include "utils/misc.hpp"
 #include "utils/image.hpp"
-#include "api/http.hpp"
+#include "api/jellyfin.hpp"
 
 using namespace brls::literals;
+
+/// "[00:12.34][01:02.00]text" -> one line per time tag, other tags ([ar:...]) are ignored
+static std::vector<MusicView::LyricLine> parseLrc(const std::string& lrc) {
+    std::vector<MusicView::LyricLine> lines;
+    std::istringstream in(lrc);
+    std::string line;
+    while (std::getline(in, line)) {
+        if (!line.empty() && line.back() == '\r') line.pop_back();
+        std::vector<double> times;
+        size_t pos = 0;
+        while (pos < line.size() && line[pos] == '[') {
+            size_t end = line.find(']', pos);
+            if (end == std::string::npos) break;
+            int min = 0;
+            double sec = 0;
+            if (sscanf(line.c_str() + pos, "[%d:%lf]", &min, &sec) == 2) times.push_back(min * 60 + sec);
+            pos = end + 1;
+        }
+        for (double t : times) lines.push_back({t, line.substr(pos)});
+    }
+    std::stable_sort(lines.begin(), lines.end(), [](auto& a, auto& b) { return a.time < b.time; });
+    return lines;
+}
+
+static const std::string& findLyric(const jellyfin::Detail& detail) {
+    static const std::string empty;
+    for (auto& src : detail.MediaSources)
+        for (auto& s : src.MediaStreams)
+            if (s.Type == jellyfin::streamTypeSubtitle && !s.Extradata.empty()) return s.Extradata;
+    return empty;
+}
 
 MusicView::MusicView() {
     this->inflateFromXMLRes("xml/view/music_view.xml");
@@ -62,6 +94,7 @@ void MusicView::registerMpvEvent() {
         auto& mpv = MPVCore::instance();
         switch (event) {
         case MpvEventEnum::START_FILE:
+            this->setLyrics({});
             if (playList.size() > 0) {
                 std::string key = fmt::format("playlist/{}/id", mpv.getInt("playlist-playing-pos"));
                 auto it = playList.find(mpv.getInt(key));
@@ -69,6 +102,7 @@ void MusicView::registerMpvEvent() {
                     this->playTitle->setText(it->second.Title);
                     this->itemId = it->second.Id;
                     mpv.getCustomEvent()->fire(TRACK_START, &it->second);
+                    this->doLyric(it->second.Id);
                 }
             }
             break;
@@ -147,6 +181,44 @@ void MusicView::registerViewAction(brls::View* view) {
         mpv.command("playlist-next");
         return true;
     });
+
+    view->registerAction("main/player/lyric"_i18n, brls::BUTTON_X, [](brls::View* view) {
+        brls::Application::pushActivity(new brls::Activity(new LyricView()));
+        return true;
+    });
+}
+
+void MusicView::draw(NVGcontext* vg, float x, float y, float width, float height, brls::Style style,
+    brls::FrameContext* ctx) {
+    int index = this->lyricIndex();
+    if (index != this->shownLyric) {
+        this->shownLyric = index;
+        this->playLyric->setText(index < 0 ? "" : this->lyrics[index].text);
+    }
+    Box::draw(vg, x, y, width, height, style, ctx);
+}
+
+int MusicView::lyricIndex() const {
+    double t = MPVCore::instance().playback_time;
+    auto it = std::upper_bound(
+        this->lyrics.begin(), this->lyrics.end(), t, [](double t, const LyricLine& l) { return t < l.time; });
+    return int(it - this->lyrics.begin()) - 1;
+}
+
+void MusicView::setLyrics(std::vector<LyricLine> lines) {
+    this->lyrics = std::move(lines);
+    // force draw() to refresh the label even if the index stays the same
+    this->shownLyric = -2;
+    MPVCore::instance().getCustomEvent()->fire(LYRIC_LOAD, nullptr);
+}
+
+void MusicView::doLyric(const std::string& id) {
+    jellyfin::getJSON<jellyfin::Detail>(
+        [this, id](const jellyfin::Detail& r) {
+            // track may have changed while the request was in flight
+            if (id == this->itemId) this->setLyrics(parseLrc(findLyric(r)));
+        },
+        nullptr, jellyfin::apiUserItem, AppConfig::instance().getUserId(), id);
 }
 
 const std::string& MusicView::currentId() { return this->itemId; }
@@ -217,6 +289,7 @@ void MusicView::reset() {
     this->leftStatusLabel->setText("--:--");
     this->osdSlider->setProgress(0);
     this->itemId.clear();
+    this->setLyrics({});
 }
 
 bool MusicView::toggleShuffle() {

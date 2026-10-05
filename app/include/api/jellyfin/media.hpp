@@ -159,9 +159,11 @@ struct Stream {
     bool IsDefault = false;
     bool IsExternal = false;
     std::string DeliveryUrl;
+    // Emby puts embedded lyrics (LRC text) of audio here
+    std::string Extradata;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    Stream, Codec, DisplayTitle, Type, Index, IsDefault, IsExternal, DeliveryUrl);
+    Stream, Codec, DisplayTitle, Type, Index, IsDefault, IsExternal, DeliveryUrl, Extradata);
 
 struct Source {
     std::string Id;

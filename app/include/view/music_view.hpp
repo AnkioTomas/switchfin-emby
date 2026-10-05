@@ -22,7 +22,13 @@ public:
 
     bool isTranslucent() override { return true; }
 
+    void draw(NVGcontext* vg, float x, float y, float width, float height, brls::Style style,
+        brls::FrameContext* ctx) override;
+
     void registerViewAction(brls::View* view);
+
+    /// index of the lyric line at current playback time, -1 before the first line
+    int lyricIndex() const;
 
     const std::string& currentId();
 
@@ -45,6 +51,13 @@ public:
         }
     };
 
+    struct LyricLine {
+        double time;
+        std::string text;
+    };
+    /// lyrics of the current track sorted by time, LYRIC_LOAD is fired when replaced
+    std::vector<LyricLine> lyrics;
+
 private:
     BRLS_BIND(brls::Box, btnPrev, "music/prev");
     BRLS_BIND(brls::Box, btnNext, "music/next");
@@ -57,6 +70,11 @@ private:
     BRLS_BIND(brls::Label, leftStatusLabel, "music/left/status");
     BRLS_BIND(brls::Label, rightStatusLabel, "music/right/status");
     BRLS_BIND(brls::Label, playTitle, "music/play/title");
+    BRLS_BIND(brls::Label, playLyric, "music/play/lyric");
+
+    void doLyric(const std::string& id);
+
+    void setLyrics(std::vector<LyricLine> lines);
 
     bool toggleShuffle();
 
@@ -75,6 +93,7 @@ private:
     int64_t playSession = 0;
     std::string itemId;
     MusicList playList;
+    int shownLyric = -1;
 
     RepeatMode repeat = RepeatNone;
 };

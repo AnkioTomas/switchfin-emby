@@ -35,3 +35,4 @@ const std::string QUALITY_CHANGE = "QUALITY_CHANGE";
 const std::string SYNC_STOP = "SYNC_STOP";
 
 const std::string TRACK_START = "TRACK_START";
+const std::string LYRIC_LOAD = "LYRIC_LOAD";
