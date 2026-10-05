@@ -2,7 +2,6 @@
 #include "view/mpv_core.hpp"
 #include "view/svg_image.hpp"
 #include "view/video_progress_slider.hpp"
-#include "view/lyric_view.hpp"
 #include "utils/config.hpp"
 #include "utils/keybind.hpp"
 #include "utils/misc.hpp"
@@ -182,8 +181,16 @@ void MusicView::registerViewAction(brls::View* view) {
         return true;
     });
 
-    view->registerAction("main/player/lyric"_i18n, brls::BUTTON_X, [](brls::View* view) {
-        brls::Application::pushActivity(new brls::Activity(new LyricView()));
+    // lyrics and the track list share the same place on music pages.
+    // Captures the page: a tapped hint passes the hint view, not the page.
+    view->registerAction("main/player/lyric"_i18n, brls::BUTTON_X, [this, view](brls::View*) {
+        auto* tracks = view->getView("album/tracks");
+        auto* lyric = view->getView("album/lyric");
+        bool show = lyric->getVisibility() == brls::Visibility::GONE;
+        lyric->setVisibility(show ? brls::Visibility::VISIBLE : brls::Visibility::GONE);
+        tracks->setVisibility(show ? brls::Visibility::GONE : brls::Visibility::VISIBLE);
+        this->playLyric->setVisibility(show ? brls::Visibility::INVISIBLE : brls::Visibility::VISIBLE);
+        brls::Application::giveFocus(show ? this->btnToggle : tracks);
         return true;
     });
 }

@@ -60,4 +60,9 @@
         id="album/tracks"
         focusable="true" />
 
+    <LyricView
+        grow="1"
+        id="album/lyric"
+        visibility="gone" />
+
 </brls:Box>

@@ -7,11 +7,7 @@ using namespace brls::literals;
 // the paddings keep every line centerable without clamping the scroll offset
 const std::string lyricViewXML = R"xml(
     <brls:Box
-        width="auto"
-        height="auto"
-        axis="column"
-        backgroundColor="@theme/brls/background"
-        paddingBottom="@style/main/content_padding_top_bottom">
+        axis="column">
 
         <brls:ScrollingFrame
             id="lyric/scroll"
@@ -24,30 +20,11 @@ const std::string lyricViewXML = R"xml(
                 paddingTop="300"
                 paddingBottom="300" />
         </brls:ScrollingFrame>
-
-        <brls:Box
-            id="lyric/stats"
-            axis="column"
-            width="600"
-            alignSelf="center" />
     </brls:Box>
 )xml";
 
 LyricView::LyricView() {
     this->inflateFromXMLString(lyricViewXML);
-
-    auto& stats = MusicView::instance();
-    this->prevParent = stats.getParent();
-    if (this->prevParent) this->prevParent->clearViews(false);
-    this->stats->addView(&stats);
-    stats.registerViewAction(this);
-
-    auto close = [](...) {
-        brls::Application::popActivity();
-        return true;
-    };
-    this->registerAction("hints/back"_i18n, brls::BUTTON_B, close);
-    this->registerAction("", brls::BUTTON_X, close, true);
 
     this->eventSubscribeID = MPVCore::instance().getCustomEvent()->subscribe([this](const std::string& event, void*) {
         if (event == LYRIC_LOAD) this->rebuild();
@@ -57,12 +34,8 @@ LyricView::LyricView() {
 
 LyricView::~LyricView() {
     MPVCore::instance().getCustomEvent()->unsubscribe(this->eventSubscribeID);
-    this->stats->clearViews(false);
-    auto& stats = MusicView::instance();
-    if (this->prevParent)
-        this->prevParent->addView(&stats);
-    else
-        stats.setParent(nullptr);
+    // the page may be closed while lyrics are shown
+    MusicView::instance().getView("music/play/lyric")->setVisibility(brls::Visibility::VISIBLE);
 }
 
 void LyricView::rebuild() {

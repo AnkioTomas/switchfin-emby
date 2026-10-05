@@ -6,6 +6,7 @@
 #include "api/analytics.hpp"
 
 #include "view/svg_image.hpp"
+#include "view/lyric_view.hpp"
 #include "view/custom_button.hpp"
 #include "view/context_menu.hpp"
 #include "view/auto_tab_frame.hpp"
@@ -85,6 +86,7 @@ int main(int argc, char* argv[]) {
 
     // Register custom views (including tabs, which are views)
     brls::Application::registerXMLView("SVGImage", SVGImage::create);
+    brls::Application::registerXMLView("LyricView", LyricView::create);
     brls::Application::registerXMLView("IconButton", IconButton::create);
     brls::Application::registerXMLView("MenuItem", MenuItem::create);
     brls::Application::registerXMLView("CustomButton", CustomButton::create);
