@@ -69,26 +69,26 @@ jobs:
       uses: actions/download-artifact@v8
     - name: Package Assets
       run: |
-        for p in Switchfin-windows-*; do
+        for p in Switchfin-emby-windows-*; do
           [[ -d $p ]] && 7z a -tzip -mx9 $p.zip ./$p/* && rm -rf $p
         done
         tree
     - name: Release and Upload Assets
       uses: softprops/action-gh-release@v3
       with:
-        name: Switchfin ${{ github.ref_name }}
+        name: Switchfin-emby ${{ github.ref_name }}
         tag_name: ${{ github.ref_name }}
         body_path: RELEASE_NOTES.md
         draft: true
         files: |
-          Switchfin-windows-*.zip
-          Switchfin-macOS-*/*.dmg
-          Switchfin-NintendoSwitch-deko3d-*/*.nro
-          Switchfin-PS4-*/*.pkg
-          Switchfin-Vita-*/*.vpk
-          Switchfin-Flatpak-*/*.flatpak
-          Switchfin-Archlinux-*/*.pkg.tar.*
-          Switchfin-android-*/*.apk
+          Switchfin-emby-windows-*.zip
+          Switchfin-emby-macOS-*/*.dmg
+          Switchfin-emby-NintendoSwitch-deko3d-*/*.nro
+          Switchfin-emby-PS4-*/*.pkg
+          Switchfin-emby-Vita-*/*.vpk
+          Switchfin-emby-Flatpak-*/*.flatpak
+          Switchfin-emby-Archlinux-*/*.pkg.tar.*
+          Switchfin-emby-android-*/*.apk
 
   build-nx:
     runs-on: ubuntu-latest
@@ -137,7 +137,7 @@ jobs:
     - name: Upload nro
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-NintendoSwitch${{ matrix.shuffix }}-${{ github.run_number }}
+        name: Switchfin-emby-NintendoSwitch${{ matrix.shuffix }}-${{ github.run_number }}
         path: build/Switchfin.nro
     - name: Upload elf
       uses: actions/upload-artifact@v7
@@ -171,7 +171,7 @@ jobs:
     - name: Upload pkg
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-PS4-${{ github.run_number }}
+        name: Switchfin-emby-PS4-${{ github.run_number }}
         path: build/*.pkg
     - name: Upload oelf
       uses: actions/upload-artifact@v7
@@ -205,7 +205,7 @@ jobs:
     - name: Upload vpk
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-Vita-${{ github.run_number }}
+        name: Switchfin-emby-Vita-${{ github.run_number }}
         path: build/Switchfin.vpk
     - name: Upload velf
       uses: actions/upload-artifact@v7
@@ -241,7 +241,7 @@ jobs:
     - name: Build flatpak
       uses: flatpak/flatpak-github-actions/flatpak-builder@v6.7
       with:
-        bundle: Switchfin-Linux-${{ matrix.arch }}-${{ matrix.driver }}-${{ github.run_number }}.flatpak
+        bundle: Switchfin-emby-Linux-${{ matrix.arch }}-${{ matrix.driver }}-${{ github.run_number }}.flatpak
         manifest-path: scripts/flatpak-manifest.yaml
         cache-key: flatpak-${{ matrix.driver }}-${{ hashFiles('scripts/flatpak-manifest.yaml') }}
         upload-artifact: false
@@ -249,7 +249,7 @@ jobs:
     - name: Upload Assets
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-Flatpak-${{ matrix.arch }}-${{ matrix.driver }}-${{ github.run_number }}
+        name: Switchfin-emby-Flatpak-${{ matrix.arch }}-${{ matrix.driver }}-${{ github.run_number }}
         path: Switchfin-*.flatpak
         if-no-files-found: error
 
@@ -290,7 +290,7 @@ jobs:
     - name: Upload Assets
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-${{ matrix.img }}-${{ matrix.tag }}-${{ matrix.arch }}-${{ github.run_number }}
+        name: Switchfin-emby-${{ matrix.img }}-${{ matrix.tag }}-${{ matrix.arch }}-${{ github.run_number }}
         path: switchfin_*.deb
 
   build-aur:
@@ -305,7 +305,7 @@ jobs:
     - name: Upload Assets
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-Archlinux-${{ github.run_number }}
+        name: Switchfin-emby-Archlinux-${{ github.run_number }}
         path: scripts/aur/*.pkg.tar.*
 
   build-macos:
@@ -349,11 +349,11 @@ jobs:
           --icon-size 100 --icon "Switchfin.app" 200 190 \
           --icon "README.md" 400 100 --hide-extension "Switchfin.app" \
           --app-drop-link 600 185 --volicon ./scripts/macos/dmg.icns \
-          --volname "Switchfin" Switchfin-macOS-${{ matrix.tag }}-${{ github.run_number }}.dmg "dist/"
+          --volname "Switchfin-emby" Switchfin-emby-macOS-${{ matrix.tag }}-${{ github.run_number }}.dmg "dist/"
     - name: Upload Assets
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-macOS-${{ matrix.tag }}-${{ github.run_number }}
+        name: Switchfin-emby-macOS-${{ matrix.tag }}-${{ github.run_number }}
         path: Switchfin-*.dmg
 
   build-mingw:
@@ -420,7 +420,7 @@ jobs:
     - name: Upload Assets
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-windows-${{ matrix.arch }}-${{ github.run_number }}
+        name: Switchfin-emby-windows-${{ matrix.arch }}-${{ github.run_number }}
         path: |
           build/Switchfin.exe
           build/Switchfin.pdb
@@ -465,5 +465,5 @@ jobs:
     - name: Upload dist
       uses: actions/upload-artifact@v7
       with:
-        name: Switchfin-android-${{ github.run_number }}
+        name: Switchfin-emby-android-${{ github.run_number }}
         path: app/platform/android/app/build/outputs/apk/release/*.apk
