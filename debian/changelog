@@ -1,3 +1,10 @@
+switchfin (0.9.5-1) unstable; urgency=medium
+
+  * switch to Emby Server
+  * add embedded lyrics for music
+
+ -- ankio <ankio@ankio.net>  Mon, 05 Oct 2026 20:24:35 +0800
+
 switchfin (0.9.4-1) unstable; urgency=medium
 
   * add local file gallery viewing

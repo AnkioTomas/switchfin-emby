@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.9.5]
+
+First release of Switchfin for Emby, forked from Switchfin 0.9.4. Only Emby Server is supported.
+
+### Added
+
+* migrate the client from Jellyfin to Emby Server (Emby authorization, paging and media source semantics)
+* home page sections driven by Emby display preferences
+* embedded lyrics for music: current line in the player bar, full lyrics panel toggled with X on music pages
+* translations for the new strings in all languages
+* configurable download path
+
+### Fixed
+
+* album and track art not loading on Emby
+* paged lists wrongly showing "no results"
+* app hanging on exit while the websocket waits for the server
+* Android build of curl and deb linking against static MuPDF
+
+### Changed
+
+* Quick Connect login, server storage info and scheduled task list are removed (no Emby equivalent)
+* update checks and downloads now use AnkioTomas/switchfin-emby
+* app id is now `fun.dragonfly.switchfin-emby` (Android: `fun.dragonfly.switchfin_emby`), so it installs next to upstream Switchfin
+* release assets are named `Switchfin-emby-*`
+
 ## [0.9.4]
 
 ### Added
