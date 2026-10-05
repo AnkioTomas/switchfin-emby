@@ -38,10 +38,15 @@
 #include <SDL2/SDL_main.h>
 #endif
 
+#ifdef __SWITCH__
+#include <sys/stat.h>
+#endif
+
 using namespace brls::literals;  // for _i18n
 
 int main(int argc, char* argv[]) {
     std::vector<std::string> items;
+    bool logToFile = false;
     for (int i = 1; i < argc; i++) {
         if (std::strcmp(argv[i], "-d") == 0) {
             brls::Logger::setLogLevel(brls::LogLevel::LOG_DEBUG);
@@ -52,6 +57,7 @@ int main(int argc, char* argv[]) {
         } else if (std::strcmp(argv[i], "-o") == 0) {
             const char* path = (i + 1 < argc) ? argv[++i] : "switchfin.log";
             brls::Logger::setLogOutput(std::fopen(path, "w+"));
+            logToFile = true;
         } else if (std::strcmp(argv[i], "-version") == 0) {
             brls::Logger::info("{} {}", AppVersion::getDeviceName(), AppVersion::getCommit());
             return 0;
@@ -63,6 +69,21 @@ int main(int argc, char* argv[]) {
     std::setlocale(LC_ALL, "C.UTF-8");
     // Load cookies and settings
     auto& conf = AppConfig::instance();
+#ifdef __SWITCH__
+    if (!logToFile) {
+        // Horizon FS rename won't overwrite, so drop the old log first
+        const std::string dir = conf.configDir();
+        const std::string log = dir + "/switchfin.log";
+        const std::string old = dir + "/switchfin.old.log";
+        mkdir(dir.c_str(), 0755);
+        std::remove(old.c_str());
+        std::rename(log.c_str(), old.c_str());
+        if (FILE* f = std::fopen(log.c_str(), "w")) {
+            std::setvbuf(f, nullptr, _IOLBF, 0);
+            brls::Logger::setLogOutput(f);
+        }
+    }
+#endif
     if (!conf.init()) {
         return 0;
     }

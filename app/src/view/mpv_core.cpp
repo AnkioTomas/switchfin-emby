@@ -202,8 +202,8 @@ void MPVCore::init() {
         mpv_set_option_string(mpv, "terminal", "yes");
         //  mpv_set_option_string(mpv, "msg-level", "all=no");
         mpv_set_option_string(mpv, "msg-level", "all=v");
-    } else if (brls::Application::isDebuggingViewEnabled()) {
-        mpv_request_log_messages(mpv, "info");
+    } else {
+        mpv_request_log_messages(mpv, brls::Application::isDebuggingViewEnabled() ? "info" : "warn");
     }
 
 #if (defined(__APPLE__) || defined(__linux__) || defined(_WIN32)) && !defined(ANDROID)
